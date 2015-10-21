@@ -10,10 +10,16 @@ public class Publisher
 {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="Pub_id")
 	private Long pubID = null;
+	@Column(name="Name")
 	private String name = null;
+	@Column(name="Address")
 	private String address = null;
+	@Column(name="TelNum")
 	private Long telNum = null;
+	@OneToMany(mappedBy="myPublisher")
+	private List<Author> authors;
 	
 	public Publisher()
 	{

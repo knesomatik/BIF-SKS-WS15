@@ -10,9 +10,15 @@ public class Book
 {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="Book_ID")
 	private Long bookID = null;
+	@Column(name="Title")
 	private String title = null;
+	@Column(name="ReleaseDate")
 	private Date pubYear = null;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="AUTH_ID")
+	private Publisher myBooks;
 	
 	public Book()
 	{

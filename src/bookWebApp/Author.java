@@ -10,12 +10,23 @@ public class Author
 {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="Auth_id")
 	private Long authID = null;
+	@Column(name="Firstname")
 	private String firstname = null;
+	@Column(name="Secondname")
 	private String secondname = null;
+	@Column(name="Bday")
 	private Date bDay = null;
+	@Column(name="Address")
 	private String address = null;
+	@Column(name="TelNum")
 	private Long telNum = null;
+	@OneToMany(mappedBy="myBooks")
+	private List<Book> books;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="PUB_ID")
+	private Publisher myPublisher;
 	
 	public Author()
 	{
