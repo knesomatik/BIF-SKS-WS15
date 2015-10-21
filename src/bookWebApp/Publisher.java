@@ -3,22 +3,13 @@ package bookWebApp;
 import javax.persistence.*;
 
 @Entity
-<<<<<<< HEAD
-@Table(name="t_publisher")
-@NamedQuery(name="Publisher.selectAll", query="SELECT n FROM Publisher n")
-public class Publisher 
-{
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="Pub_id")
-=======
 @Table(name = "t_publisher")
 @NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n")
 public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
->>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
+	@Column(name="Pub_id")
 	private Long pubID = null;
 	@Column(name="Name")
 	private String name = null;
@@ -26,18 +17,12 @@ public class Publisher {
 	private String address = null;
 	@Column(name="TelNum")
 	private Long telNum = null;
-<<<<<<< HEAD
 	@OneToMany(mappedBy="myPublisher")
 	private List<Author> authors;
-	
+
 	public Publisher()
 	{
-		
-=======
 
-	public Publisher() {
-
->>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
 	}
 
 	public Publisher(Long newID, String first, String newAd, Long newTel) {

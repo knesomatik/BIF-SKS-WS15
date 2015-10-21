@@ -4,40 +4,25 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-<<<<<<< HEAD
-@Table(name="t_book")
-@NamedQuery(name="Book.selectAll", query="SELECT n FROM Book n")
-public class Book 
-{
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="Book_ID")
-=======
 @Table(name = "t_book")
 @NamedQuery(name = "Book.selectAll", query = "SELECT n FROM Book n")
 public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
->>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
+	@Column(name="Book_ID")
 	private Long bookID = null;
 	@Column(name="Title")
 	private String title = null;
 	@Column(name="ReleaseDate")
 	private Date pubYear = null;
-<<<<<<< HEAD
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="AUTH_ID")
 	private Publisher myBooks;
-	
+
 	public Book()
 	{
-		
-=======
 
-	public Book() {
-
->>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
 	}
 
 	public Book(String first, Date sec) {

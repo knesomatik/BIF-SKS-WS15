@@ -4,22 +4,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-<<<<<<< HEAD
-@Table(name="t_author")
-@NamedQuery(name="Author.selectAll", query="SELECT n FROM Author n")
-public class Author 
-{
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="Auth_id")
-=======
 @Table(name = "t_author")
 @NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
 public class Author {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
->>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
+
 	private Long authID = null;
 	@Column(name="Firstname")
 	private String firstname = null;
@@ -31,21 +22,15 @@ public class Author {
 	private String address = null;
 	@Column(name="TelNum")
 	private Long telNum = null;
-<<<<<<< HEAD
 	@OneToMany(mappedBy="myBooks")
 	private List<Book> books;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="PUB_ID")
 	private Publisher myPublisher;
-	
+
 	public Author()
 	{
-		
-=======
 
-	public Author() {
-
->>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
 	}
 
 	public Author(Long newID, String first, String sec, Date newBday, String newAd, Long newTel) {
