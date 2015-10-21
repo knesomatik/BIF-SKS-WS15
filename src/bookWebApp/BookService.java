@@ -6,13 +6,11 @@ import javax.ejb.*;
 import javax.persistence.*;
 
 @Stateless
-//@TransactionManagement(TransactionManagementType.CONTAINER)
 public class BookService 
 {
 	@PersistenceContext
 	private EntityManager em;
 	
-	//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void removeNews(Long id)
 	{
 		Book newS = em.find(Book.class, id);
@@ -20,23 +18,8 @@ public class BookService
 	}
 	
 	
-	public List<Book> getAllNews()
+	public List<Book> getAllBooks()
 	{
-		/*List<News> news = Arrays.asList(new News("title1", "text1"), 
-										new News ("title2","text2"), 
-										new News ("title3","text3"));
-		return news;
-		*/
-		
-		/*
-		News n = new News();
-		em.persist(n);
-		n.setText("bla bla bla");
-		//em.detach(n);
-		
-		News n2 = new News();
-		em.persist(n2);
-		*/
 		return em.createNamedQuery("Book.selectAll", Book.class).getResultList();
 	}
 	

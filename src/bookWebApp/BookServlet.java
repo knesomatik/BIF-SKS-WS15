@@ -26,9 +26,9 @@ public class BookServlet extends HttpServlet {
 		
 		bookService.alterText("Title");
 		
-		bookService.getAllNews().forEach(book -> {
+		bookService.getAllBooks().forEach(book -> {
 			out.println("<h1>" + book.getTitle() + "</h1>");
-			out.println("<p>" + book.getText() + "</p>");
+			out.println("<p>" + book.getDate() + "</p>");
 		});
 	
 		out.println("</body>");

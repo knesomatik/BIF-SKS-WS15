@@ -1,6 +1,7 @@
 package bookWebApp;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name="t_book")
@@ -9,31 +10,31 @@ public class Book
 {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long newsID = null;
+	private Long bookID = null;
 	private String title = null;
-	private String text = null;
+	private Date pubYear = null;
 	
 	public Book()
 	{
 		
 	}
 	
-	public Book(String first, String sec)
+	public Book(String first, Date sec)
 	{
 		title = first;
-		text = sec;
+		pubYear = sec;
 	}
 	
-	public Book(Long newsDD, String first, String sec)
+	public Book(Long newsDD, String first, Date sec)
 	{
-		newsID = newsDD;
+		bookID = newsDD;
 		title = first;
-		text = sec;
+		pubYear = sec;
 	}
 	
 	public Long getID()
 	{
-		return newsID;
+		return bookID;
 	}
 	
 	public String getTitle()
@@ -41,14 +42,14 @@ public class Book
 		return title;
 	}
 	
-	public String getText()
+	public Date getDate()
 	{
-		return text;
+		return pubYear;
 	}
 	
 	public void setID(Long newID)
 	{
-		newsID = newID;
+		bookID = newID;
 	}
 	
 	public void setTitle(String newTitle)
@@ -56,9 +57,9 @@ public class Book
 		title = newTitle;
 	}
 	
-	public void setText(String newText)
+	public void setDate(Date newText)
 	{
-		text = newText;
+		pubYear = newText;
 	}
 	
 }
