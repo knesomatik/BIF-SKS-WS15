@@ -1,11 +1,11 @@
 package bookWebApp;
 
-import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+import java.util.Date;
 
-@Generated(value="Dali", date="2015-10-21T02:57:40.136+0200")
+@Generated(value = "Dali", date = "2015-10-21T02:57:40.136+0200")
 @StaticMetamodel(Author.class)
 public class Author_ {
 	public static volatile SingularAttribute<Author, Long> authID;
