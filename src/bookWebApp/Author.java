@@ -1,9 +1,10 @@
 package bookWebApp;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 @Entity
+<<<<<<< HEAD
 @Table(name="t_author")
 @NamedQuery(name="Author.selectAll", query="SELECT n FROM Author n")
 public class Author 
@@ -11,6 +12,14 @@ public class Author
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="Auth_id")
+=======
+@Table(name = "t_author")
+@NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
+public class Author {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+>>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
 	private Long authID = null;
 	@Column(name="Firstname")
 	private String firstname = null;
@@ -22,6 +31,7 @@ public class Author
 	private String address = null;
 	@Column(name="TelNum")
 	private Long telNum = null;
+<<<<<<< HEAD
 	@OneToMany(mappedBy="myBooks")
 	private List<Book> books;
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -31,10 +41,14 @@ public class Author
 	public Author()
 	{
 		
+=======
+
+	public Author() {
+
+>>>>>>> c936f2cf73e43644b9543f24541f79cbfaa247b4
 	}
-	
-	public Author(Long newID, String first, String sec, Date newBday, String newAd, Long newTel)
-	{
+
+	public Author(Long newID, String first, String sec, Date newBday, String newAd, Long newTel) {
 		authID = newID;
 		firstname = first;
 		secondname = sec;
@@ -42,66 +56,54 @@ public class Author
 		address = newAd;
 		telNum = newTel;
 	}
-	
-	public Long getID()
-	{
+
+	public Long getID() {
 		return authID;
 	}
-	
-	public String getFirstName()
-	{
-		return firstname;
-	}
-	
-	public String getSecondName()
-	{
-		return secondname;
-	}
-	
-	public Date getBday()
-	{
-		return bDay;
-	}
-	
-	public String getAddress()
-	{
-		return address;
-	}
-	
-	public Long getTelNum()
-	{
-		return telNum;
-	}
-	
-	public void setID(Long newID)
-	{
+
+	public void setID(Long newID) {
 		authID = newID;
 	}
-	
-	public void setFirstName(String newTitle)
-	{
+
+	public String getFirstName() {
+		return firstname;
+	}
+
+	public void setFirstName(String newTitle) {
 		firstname = newTitle;
 	}
-	
-	public void setSecondName(String newTitle)
-	{
+
+	public String getSecondName() {
+		return secondname;
+	}
+
+	public void setSecondName(String newTitle) {
 		secondname = newTitle;
 	}
-	
-	public void setBday(Date newText)
-	{
+
+	public Date getBday() {
+		return bDay;
+	}
+
+	public void setBday(Date newText) {
 		bDay = newText;
 	}
-	
-	public void setAddress(String newTitle)
-	{
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String newTitle) {
 		address = newTitle;
 	}
-	
-	public void setTelNum(Long newNum)
-	{
+
+	public Long getTelNum() {
+		return telNum;
+	}
+
+	public void setTelNum(Long newNum) {
 		telNum = newNum;
 	}
 
-	
+
 }

@@ -1,39 +1,33 @@
 package bookWebApp;
 
-import java.util.*;
-
 import javax.ejb.*;
 import javax.persistence.*;
+import java.util.List;
 
 @Stateless
-public class BookService 
-{
+public class BookService {
 	@PersistenceContext
 	private EntityManager em;
-	
-	public void removeNews(Long id)
-	{
+
+	public void removeNews(Long id) {
 		Book newS = em.find(Book.class, id);
 		em.remove(newS);
 	}
-	
-	
-	public List<Book> getAllBooks()
-	{
+
+
+	public List<Book> getAllBooks() {
 		return em.createNamedQuery("Book.selectAll", Book.class).getResultList();
 	}
-	
-	public void alterText(String first)
-	{
+
+	public void alterText(String first) {
 		List<Book> list = em.createNamedQuery("Book.selectAll", Book.class).getResultList();
-		
+
 		int count = 0;
-		for(Book n : list)
-		{
-			n.setTitle(first+count);
+		for (Book n : list) {
+			n.setTitle(first + count);
 			count++;
 		}
 	}
-	
-	
+
+
 }
