@@ -16,5 +16,5 @@ Vagrant.configure(2) do |config|
 		s.path = "vagrant/setup.sh"
 	end
 
-	config.vm.synced_folder ".", "/vagrant"
+	#config.vm.synced_folder ".", "/vagrant"
 end
