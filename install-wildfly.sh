@@ -8,7 +8,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/opt/jboss/wildfly/wildfly-9.0.1.Final/bin/standalone.sh -b 0.0.0.0
+ExecStart=/opt/jboss/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0
 TimeoutSec=300
 
 [Install]
@@ -33,8 +33,10 @@ cd $HOME \
     && curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
     && sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
     && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
-    && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
+    && mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME/ \
     && rm wildfly-$WILDFLY_VERSION.tar.gz
+
+/opt/jboss/wildfly/bin/add-user.sh -u x -p x
 
 echo "$wildfly_startup" > /usr/lib/systemd/system/wildfly.service
 systemctl enable wildfly.service
