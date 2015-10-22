@@ -5,3 +5,6 @@ deploy:
 redeploy:
 	mvn install wildfly:redeploy
 	echo "app running on localhost:9991"
+
+up:
+	vagrant destroy --force; vagrant up --provision

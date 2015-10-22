@@ -11,7 +11,10 @@ Vagrant.configure(2) do |config|
 	config.vm.network :forwarded_port, guest: 9990, host: 9990
 	config.vm.network :forwarded_port, guest: 8080, host: 9991
 
-	config.vm.provision "shell", path: "install-wildfly.sh"
+	config.vm.provision "shell" do |s|
+		s.keep_color = true
+		s.path = "vagrant/setup.sh"
+	end
 
 	config.vm.synced_folder ".", "/vagrant"
 end
