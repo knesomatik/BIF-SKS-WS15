@@ -6,9 +6,10 @@ Vagrant.configure(2) do |config|
 	config.vm.box = "centos/7"
 
 	# options for parallels provider
-	config.vm.provider "parallels" do |v|
+	config.vm.provider "parallels" do |v, override|
 		v.memory = 1024
 		v.cpus = 2
+		override.vm.box = "parallels/centos-7.1"
 	end
 
 	# options for virtualbox provider

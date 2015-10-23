@@ -20,7 +20,6 @@ WantedBy=multi-user.target
 
 # update system
 yum -y update
-yum -y upgrade
 
 # install java
 yum -y install java-1.8.0-openjdk
