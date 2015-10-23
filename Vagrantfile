@@ -1,20 +1,33 @@
-ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
-
+#
+# Vagrant Config for SKS
+#
 Vagrant.configure(2) do |config|
+	# start with centos 7
 	config.vm.box = "centos/7"
 
-	config.vm.provider "virtualbox" do |v|
+	# options for parallels provider
+	config.vm.provider "parallels" do |v|
 		v.memory = 1024
-		v.cpus = 1
+		v.cpus = 2
 	end
 
-	config.vm.network :forwarded_port, guest: 9990, host: 9990
-	config.vm.network :forwarded_port, guest: 8080, host: 9991
+	# options for virtualbox provider
+	config.vm.provider "virtualbox" do |v|
+		v.memory = 1024
+		v.cpus = 2
+	end
 
+	# forward VM ports
+	config.vm.network :forwarded_port, guest: 9990, host: 9990
+	config.vm.network :forwarded_port	, guest: 8080, host: 9991
+
+	# set provisioning
 	config.vm.provision "shell" do |s|
 		s.keep_color = true
 		s.path = "vagrant/setup.sh"
 	end
 
-	#config.vm.synced_folder ".", "/vagrant"
+	# sync folder
+	# not needed yet
+	# config.vm.synced_folder ".", "/vagrant"
 end

@@ -3,7 +3,7 @@
 # systemd script for wildfly
 wildfly_startup='
 [Unit]
-Description=Wildfly server
+Description=Wildfly Server
 After=syslog.target
 After=network.target
 
@@ -11,7 +11,7 @@ After=network.target
 Type=simple
 ExecStart=/opt/jboss/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0
 TimeoutSec=300
-Restart=on-failure
+Restart=always
 RestartSec=30
 
 [Install]
@@ -22,7 +22,7 @@ WantedBy=multi-user.target
 yum -y update
 yum -y upgrade
 
-# installjava
+# install java
 yum -y install java-1.8.0-openjdk
 
 # set wildfly variables
