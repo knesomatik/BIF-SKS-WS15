@@ -41,13 +41,22 @@ WantedBy=multi-user.target
 	&& mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME/ \
 	&& rm wildfly-$WILDFLY_VERSION.tar.gz
 
-	# add user to wildfly
-	/opt/jboss/wildfly/bin/add-user.sh -u x -p x
-
 	# install and enable wildfly systemd service
 	echo "$wildfly_startup" > /usr/lib/systemd/system/wildfly.service
 	systemctl enable wildfly.service
 	systemctl start wildfly.service
+
+	# give wildfly some time to start up
+	sleep 30
+
+	# add user to wildfly
+	/opt/jboss/wildfly/bin/add-user.sh -u x -p x
+
+	# add datasource
+	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source add --name=SKS_db --driver-name=h2 --jndi-name=java:jboss/datasources/SKS_db --connection-url="jdbc:h2:/vagrant-data/SKS_db.db;DB_CLOSE_DELAY=-1" --use-ccm=true --enabled=true'
+
+	# restart wildfly
+	systemctl restart wildfly.service
 
 ) | tee ~/setup.log
 

@@ -29,6 +29,5 @@ Vagrant.configure(2) do |config|
 	end
 
 	# sync folder
-	# not needed yet
-	# config.vm.synced_folder ".", "/vagrant"
+	config.vm.synced_folder "vagrant/data", "/vagrant-data"
 end
