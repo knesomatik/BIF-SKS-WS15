@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
 
 	# sync folder
 	config.vm.synced_folder "vagrant/data", "/vagrant-data"
-	config.vm.synced_folder "vagrant/logs/server", "/opt/jboss/wildfly/standalone/log"
+	config.vm.synced_folder "vagrant/logs", "/vagrant-logs"
 
 	# set provisioning
 	config.vm.provision "shell" do |s|
