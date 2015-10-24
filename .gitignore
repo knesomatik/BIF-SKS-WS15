@@ -1,3 +1,5 @@
+vagrant/data
+
 ### Maven template
 target/
 pom.xml.tag
