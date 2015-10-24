@@ -22,12 +22,14 @@ Vagrant.configure(2) do |config|
 	config.vm.network :forwarded_port, guest: 9990, host: 9990
 	config.vm.network :forwarded_port	, guest: 8080, host: 9991
 
+	# sync folder
+	config.vm.synced_folder "vagrant/data", "/vagrant-data"
+	config.vm.synced_folder "vagrant/logs/server", "/opt/jboss/wildfly/standalone/log"
+
 	# set provisioning
 	config.vm.provision "shell" do |s|
 		s.keep_color = true
 		s.path = "vagrant/setup.sh"
 	end
-
-	# sync folder
-	config.vm.synced_folder "vagrant/data", "/vagrant-data"
 end
+
