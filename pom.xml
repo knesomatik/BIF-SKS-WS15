@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>bif.ws15.esv</groupId>
-	<artifactId>klein-knes</artifactId>
+	<artifactId>BookServiceWebApp</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1</version>
-	<name>wildfly app</name>
-	<url>http://maven.apache.org</url>
+	<name>BookServiceWebApp</name>
+	<url>http://localhost:9991</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,7 +21,6 @@
 		<version.compiler.plugin>3.3</version.compiler.plugin>
 		<version.war.plugin>2.6</version.war.plugin>
 	</properties>
-
 
 	<repositories>
 		<repository>
