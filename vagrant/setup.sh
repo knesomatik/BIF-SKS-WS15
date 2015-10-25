@@ -31,15 +31,15 @@ WantedBy=multi-user.target
 	export JBOSS_HOME="/opt/jboss/wildfly"
 
 	# create dir
-	mkdir -p $JBOSS_HOME
+	mkdir -p ${JBOSS_HOME}
 
 	# download, verify and install wildfly
 	cd $HOME \
-	&& curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
-	&& sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
-	&& tar xf wildfly-$WILDFLY_VERSION.tar.gz \
-	&& mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME/ \
-	&& rm wildfly-$WILDFLY_VERSION.tar.gz
+	&& curl -O https://download.jboss.org/wildfly/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz \
+	&& sha1sum wildfly-${WILDFLY_VERSION}.tar.gz | grep ${WILDFLY_SHA1} \
+	&& tar xf wildfly-${WILDFLY_VERSION}.tar.gz \
+	&& mv $HOME/wildfly-${WILDFLY_VERSION}/* ${JBOSS_HOME}/ \
+	&& rm wildfly-${WILDFLY_VERSION}.tar.gz
 
 	# install and enable wildfly systemd service
 	echo "$wildfly_startup" > /usr/lib/systemd/system/wildfly.service
