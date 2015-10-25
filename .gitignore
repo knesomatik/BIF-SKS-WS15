@@ -1,4 +1,5 @@
-vagrant/data
+vagrant/data/*
+vagrant/logs/*
 
 ### Maven template
 target/
