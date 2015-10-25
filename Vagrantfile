@@ -1,6 +1,12 @@
 #
 # Vagrant Config for SKS
 #
+
+unless Vagrant.has_plugin? "vagrant-vbguest"
+	print "\nvagrant-vbguest plugin must be installed\n- to install, just run 'vagrant plugin install vagrant-vbguest'\n\n"
+	exit
+end
+
 Vagrant.configure(2) do |config|
 	# start with centos 7
 	config.vm.box = "centos/7"
