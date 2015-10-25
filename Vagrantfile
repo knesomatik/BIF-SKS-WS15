@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
 
 	# forward VM ports
 	config.vm.network :forwarded_port, guest: 9990, host: 9990
-	config.vm.network :forwarded_port	, guest: 8080, host: 9991
+	config.vm.network :forwarded_port, guest: 8080, host: 9991
 
 	# sync folder
 	config.vm.synced_folder "vagrant/data", "/vagrant-data"

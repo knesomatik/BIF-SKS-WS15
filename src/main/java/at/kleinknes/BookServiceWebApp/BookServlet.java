@@ -1,4 +1,4 @@
-package bookWebApp;
+package at.kleinknes.BookServiceWebApp;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

@@ -1,7 +1,8 @@
-package bookWebApp;
+package at.kleinknes.BookServiceWebApp;
 
-import javax.ejb.*;
-import javax.persistence.*;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Stateless
