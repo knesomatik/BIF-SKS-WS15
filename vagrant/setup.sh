@@ -55,6 +55,9 @@ WantedBy=multi-user.target
 	# add datasource
 	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source add --name=SKS_db --driver-name=h2 --jndi-name=java:jboss/datasources/SKS_db --connection-url="jdbc:h2:/vagrant-data/SKS_db;DB_CLOSE_DELAY=-1" --use-ccm=true --enabled=true'
 
+	# remove exampleDS
+	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source remove --name=ExampleDS'
+
 	# restart wildfly
 	systemctl restart wildfly.service
 
