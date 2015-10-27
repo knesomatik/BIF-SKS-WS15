@@ -32,8 +32,8 @@ public class BookServlet extends HttpServlet {
 		Random r = new Random();
 		long id = (long) (r.nextDouble() * range);
 		Author author = new Author();
-		author.setFirstName("Felix");
-		author.setSecondName("Klein " + id);
+		author.setFirstName("Test");
+		author.setSecondName("Autor " + id);
 		author.setID(id);
 
 		Session session = (Session) em.getDelegate();
