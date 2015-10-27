@@ -6,7 +6,6 @@ import org.hibernate.Transaction;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +30,7 @@ public class BookServlet extends HttpServlet {
 
 		long range = 1234567L;
 		Random r = new Random();
-		long id = (long)(r.nextDouble()*range);
+		long id = (long) (r.nextDouble() * range);
 		Author author = new Author();
 		author.setFirstName("Felix");
 		author.setSecondName("Klein " + id);
@@ -46,7 +45,7 @@ public class BookServlet extends HttpServlet {
 			session.persist(author);
 
 			tx.commit();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			if (tx != null) {
 				tx.rollback();
