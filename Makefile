@@ -1,11 +1,7 @@
 # not a "real" Makefile - just some commands to make our life easier
 
 deploy:
-	mvn -T 2C install wildfly:deploy
-	echo "app running on localhost:9991"
-
-redeploy:
-	mvn -T 2C install wildfly:redeploy
+	-B -T 2C install wildfly:deploy
 	echo "app running on localhost:9991"
 
 up:
