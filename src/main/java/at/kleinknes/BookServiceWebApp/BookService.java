@@ -19,7 +19,7 @@ public class BookService {
 		em.remove(newS);
 	}
 
-	public boolean saveBooks(Object book){
+	public boolean saveBooks(Object book) {
 
 		List<Book> books;
 
@@ -27,10 +27,10 @@ public class BookService {
 			// we have only on book
 			books = new ArrayList<Book>();
 			books.add((Book) book);
-		}else if (book instanceof List){
+		} else if (book instanceof List) {
 			// we have a list of books
 			books = (List<Book>) book;
-		}else{
+		} else {
 			// invalid data
 			return false;
 		}
@@ -62,6 +62,10 @@ public class BookService {
 
 	public List<Book> getAllBooks() {
 		return em.createNamedQuery("Book.selectAll", Book.class).getResultList();
+	}
+
+	public List<Book> searchBooks(String title) {
+		return em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", title).getResultList();
 	}
 
 	public void alterText(String first) {

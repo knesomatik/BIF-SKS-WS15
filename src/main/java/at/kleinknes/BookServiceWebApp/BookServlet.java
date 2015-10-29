@@ -1,9 +1,6 @@
 package at.kleinknes.BookServiceWebApp;
 
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +20,6 @@ public class BookServlet extends HttpServlet {
 
 	@Inject
 	private BookService bookService;
-	@PersistenceContext
-	private EntityManager em;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -41,7 +36,7 @@ public class BookServlet extends HttpServlet {
 		out.println("<html>");
 		out.println("<body>");
 
-		List<Book> list = em.createNamedQuery("Book.selectAll", Book.class).getResultList();
+		List<Book> list = bookService.searchBooks("Test");
 
 		for (Book n : list) {
 			out.println("<br>");

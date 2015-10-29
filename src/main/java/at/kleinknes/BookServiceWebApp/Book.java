@@ -5,7 +5,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_book")
-@NamedQuery(name = "Book.selectAll", query = "SELECT n FROM Book n")
+@NamedQueries({
+		@NamedQuery(name = "Book.selectAll", query = "SELECT n FROM Book n"),
+		@NamedQuery(name = "Book.searchAll", query = "SELECT n FROM Book n WHERE n.title LIKE :search")
+		})
 public class Book {
 
 	@Id
