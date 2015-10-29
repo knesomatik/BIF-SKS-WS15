@@ -65,7 +65,7 @@ public class BookService {
 	}
 
 	public List<Book> searchBooks(String title) {
-		return em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", title).getResultList();
+		return em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", "%" +  title + "%").getResultList();
 	}
 
 	public void alterText(String first) {

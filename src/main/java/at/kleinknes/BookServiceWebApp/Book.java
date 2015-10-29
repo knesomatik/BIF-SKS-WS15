@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "t_book")
 @NamedQueries({
 		@NamedQuery(name = "Book.selectAll", query = "SELECT n FROM Book n"),
-		@NamedQuery(name = "Book.searchAll", query = "SELECT n FROM Book n WHERE n.title LIKE :search")
+		@NamedQuery(name = "Book.searchAll", query = "SELECT n FROM Book n WHERE lower(n.title) LIKE lower(:search)")
 		})
 public class Book {
 
