@@ -10,7 +10,7 @@ import java.util.List;
 public class Author {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Auth_id")
 	private Long authID = null;
 	@Column(name = "Firstname")

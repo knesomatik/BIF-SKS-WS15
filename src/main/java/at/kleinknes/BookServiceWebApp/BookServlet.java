@@ -31,38 +31,21 @@ public class BookServlet extends HttpServlet {
 		long range = 1234567L;
 		Random r = new Random();
 		long id = (long) (r.nextDouble() * range);
-		Author author = new Author();
-		author.setFirstName("Test");
-		author.setSecondName("Autor " + id);
-		author.setID(id);
+		Book book = new Book();
+		book.setTitle("Test " + id);
 
-		Session session = (Session) em.getDelegate();
-		Transaction tx = null;
-		tx = session.getTransaction();
-		tx.begin();
-
-		try {
-			session.persist(author);
-
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null) {
-				tx.rollback();
-			}
-		}
+		bookService.saveBooks(book);
 
 		PrintWriter out = response.getWriter();
 
 		out.println("<html>");
 		out.println("<body>");
 
-		List<Author> list = em.createNamedQuery("Author.selectAll", Author.class).getResultList();
+		List<Book> list = em.createNamedQuery("Book.selectAll", Book.class).getResultList();
 
-		for (Author n : list) {
+		for (Book n : list) {
 			out.println("<br>");
-			out.println(n.getFirstName());
-			out.println(n.getSecondName());
+			out.println(n.getTitle());
 		}
 
 		out.println("</body>");
