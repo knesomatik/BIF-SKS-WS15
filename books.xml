@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<manyBooks>
+	<book id="1">
+		<title>Catcher</title>
+		<pubYear>2011-11-11</pubYear>
+	</book>
+	<book id="2">
+		<title>Fight</title>
+		<pubYear>2011-11-11</pubYear>
+	</book>
+</manyBooks>
