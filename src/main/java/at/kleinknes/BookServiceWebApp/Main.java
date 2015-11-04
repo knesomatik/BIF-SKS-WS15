@@ -5,16 +5,23 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Main{
 
-    public static void main (String[] args) throws IOException{
+    public static void main (String[] args) throws Exception{
     	
+    	BookWS myTest = new BookWS();
+    	int count = 1;
     	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     	String test = br.readLine();
+    	
         try {
 
         	File fXmlFile = new File(test);
@@ -34,19 +41,28 @@ public class Main{
 
         		Node nNode = nList.item(temp);
         				
-        		System.out.println("\nCurrent Element :" + nNode.getNodeName());
-        				
+        		//System.out.println("\nCurrent Element :" + nNode.getNodeName());
+        
         		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
         			Element eElement = (Element) nNode;
-
-        			System.out.println("Book id : " + eElement.getAttribute("id"));
-        			System.out.println("Title : " + eElement.getElementsByTagName("title").item(0).getTextContent());
-        			System.out.println("PubYear : " + eElement.getElementsByTagName("pubYear").item(0).getTextContent());
+        			String newTitle = eElement.getAttribute("title");
+        			String newDate = eElement.getAttribute("pubYear");
+        			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+        			LocalDate date = LocalDate.parse(newDate, formatter);
+        			Book newBook = new Book();
+        			newBook.setTitle(newTitle);
+        			newBook.setDate(date);
+        			System.out.println("Book id : " + count);
+        			System.out.println("Title : " + eElement.getAttribute("title"));
+        			System.out.println("PubYear : " + eElement.getAttribute("pubYear") + "\n");
+        			//myTest.saveBook(newBook);
+        			count++;
         		}
         	}
             } catch (Exception e) {
         	e.printStackTrace();
             }
           }
-  }
+   
+}
