@@ -1,36 +1,39 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.xml.bind.annotation.*;
+
 
 @Entity
 @Table(name = "t_publisher")
 @NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Pub_id")
+	@XmlTransient
 	private Long pubID = null;
-	@Column(name = "Name")
-	private String name = null;
-	@Column(name = "Address")
-	private String address = null;
-	@Column(name = "TelNum")
-	private Long telNum = null;
-	@OneToMany(mappedBy = "myPublisher")
-	private List<Author> authors;
+	@XmlAttribute
+	private String PubName = null;
+	@XmlAttribute
+	private String PubAddress = null;
+	@XmlAttribute
+	private Long PubTelNum = null;
 
 	public Publisher() {
 
 	}
 
-	public Publisher(Long newID, String first, String newAd, Long newTel) {
-		pubID = newID;
-		name = first;
-		address = newAd;
-		telNum = newTel;
+	public Publisher(String first, String newAd, Long newTel) {
+		PubName = first;
+		PubAddress = newAd;
+		PubTelNum = newTel;
 	}
+	
+	public Boolean eqauls(Publisher pub) {
+        return this.PubName.equals(pub.PubName) && this.PubAddress.equals(pub.PubAddress) && this.PubTelNum.equals(pub.getTelNum());
+    }
 
 	public Long getID() {
 		return pubID;
@@ -41,27 +44,27 @@ public class Publisher {
 	}
 
 	public String getName() {
-		return name;
+		return PubName;
 	}
 
 	public void setName(String newTitle) {
-		name = newTitle;
+		PubName = newTitle;
 	}
 
 	public String getAddress() {
-		return address;
+		return PubAddress;
 	}
 
 	public void setAddress(String newTitle) {
-		address = newTitle;
+		PubAddress = newTitle;
 	}
 
 	public Long getTelNum() {
-		return telNum;
+		return PubTelNum;
 	}
 
 	public void setTelNum(Long newNum) {
-		telNum = newNum;
+		PubTelNum = newNum;
 	}
 
 

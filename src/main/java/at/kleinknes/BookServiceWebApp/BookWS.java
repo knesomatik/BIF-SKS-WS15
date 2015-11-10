@@ -9,7 +9,8 @@ import java.util.List;
 //@Stateless
 @WebService(
 		name = "BookWS",
-		serviceName = "BookWebService")
+		serviceName = "BookWebService", 
+		portName = "BookWebServicePort")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL)
 public class BookWS {
 
@@ -17,12 +18,7 @@ public class BookWS {
 	private BookService bookService;
 
 	@WebMethod
-	public boolean saveBook(Book book) {
-		return bookService.saveBooks(book);
-	}
-
-	@WebMethod
-	public boolean saveBooks(List<Book> books) {
+	public String saveBooks(List<Book> books) {
 		return bookService.saveBooks(books);
 	}
 

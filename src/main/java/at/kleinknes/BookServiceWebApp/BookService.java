@@ -1,54 +1,41 @@
 package at.kleinknes.BookServiceWebApp;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
 public class BookService {
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Inject
+	private PublisherService pubService;
+	private List<Publisher> pubList;
+	
+	@Inject
+	private AuthorService authService;
+	private List<Author> authList;
 
-	public boolean saveBooks(Object book) {
-
-		List<Book> books;
-
-		if (book instanceof Book) {
-			// we have only on book
-			books = new ArrayList<>();
-			books.add((Book) book);
-		} else if (book instanceof List) {
-			// we have a list of books
-			books = (List<Book>) book;
-		} else {
-			// invalid data
-			return false;
+	public String saveBooks(List<Book> books) {
+		
+		if(authList == null){
+			authList = authService.getAllAuthors();
 		}
-
-		for (Book n : books) {
-			if (n.getTitle() == null) return false;
-			if (n.getDate() == null) return false;
+		
+		if(pubList == null){
+			pubList = pubService.getAllPublishers();
 		}
-
-
-		Session session = (Session) em.getDelegate();
-		Transaction tx = session.beginTransaction();
-
-		try {
-			session.persist(book);
-		} catch (Exception e) {
-			tx.rollback();
-			return false;
+		
+		if(checkDB(books)){
+			books.forEach(em::persist);
+			return "Everything OK";
 		}
-
-		tx.commit();
-
-		return true;
+		else{
+			return "ERROR inserting Books in DB";
+		}
 	}
 
 
@@ -59,5 +46,52 @@ public class BookService {
 	public List<Book> searchBooks(String title) {
 		return em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", "%" + title + "%").getResultList();
 	}
+	
+	public Boolean checkDB(List<Book> books) {
+        Boolean goOn = true;
+        Long ID = 0L;
+        int index = 0;
+        for (Book b : books) {
+        	
+        	 for (Publisher pubDB : pubList) {
+                 if (pubDB.eqauls(b.getPublisher())) {
+                	 ID = pubDB.getID();
+                 }
+                 else{
+                	 ID = 0L;
+                 }
+             }
+        	
+            if (ID == 0L) {
+            	goOn = false;
+                break;
+            } else {
+                b.getPublisher().setID(ID);
+            }
+            for (Author auth : b.getAuthors()) {
+            	ID = authCheck(auth);
+                if (ID == 0L) {
+                	goOn = false;
+                    break;
+                } else {
+                    b.getAuthors().get(index).setID(ID);
+                }
+                index++;
+            }
+            index = 0;
+        }
+        return goOn;
+    }
 
+    private Long authCheck(Author auth) {
+        Long found = 0L;
+
+        for (Author authDB : authList) {
+            if (authDB.eqauls(auth)) {
+                found = authDB.getID();
+                break;
+            }
+        }
+        return found;
+    }
 }

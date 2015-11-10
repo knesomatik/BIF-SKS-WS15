@@ -47,12 +47,8 @@ public class Main{
 
         			Element eElement = (Element) nNode;
         			String newTitle = eElement.getAttribute("title");
-        			String newDate = eElement.getAttribute("pubYear");
-        			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
-        			LocalDate date = LocalDate.parse(newDate, formatter);
         			Book newBook = new Book();
         			newBook.setTitle(newTitle);
-        			newBook.setDate(date);
         			System.out.println("Book id : " + count);
         			System.out.println("Title : " + eElement.getAttribute("title"));
         			System.out.println("PubYear : " + eElement.getAttribute("pubYear") + "\n");
