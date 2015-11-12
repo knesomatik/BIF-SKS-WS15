@@ -16,7 +16,7 @@ public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlTransient
+	@XmlAttribute
 	private Long bookID = null;
 	@XmlAttribute
 	private String isbn = null;

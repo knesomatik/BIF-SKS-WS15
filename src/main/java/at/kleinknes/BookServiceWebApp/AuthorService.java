@@ -11,8 +11,6 @@ public class AuthorService {
 	private EntityManager em;
 
 	public List<Author> getAllAuthors() {
-		addAuthor("test", "test");
-
 		return em.createNamedQuery("Author.selectAll", Author.class).getResultList();
 	}
 

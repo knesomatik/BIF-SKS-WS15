@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
@@ -15,7 +14,7 @@ public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlTransient
+	@XmlAttribute
 	private Long pubID = null;
 	@XmlAttribute
 	private String Name = null;
