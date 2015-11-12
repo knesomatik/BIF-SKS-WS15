@@ -12,7 +12,6 @@ import java.util.List;
 		name = "BookWS",
 		serviceName = "BookWebService", 
 		portName = "BookWebServicePort")
-@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL)
 public class BookWS {
 
 	@Inject
