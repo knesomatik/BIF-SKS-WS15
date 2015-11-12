@@ -15,24 +15,24 @@ public class Publisher {
 	@XmlTransient
 	private Long pubID = null;
 	@XmlAttribute
-	private String PubName = null;
+	private String Name = null;
 	@XmlAttribute
-	private String PubAddress = null;
+	private Long PostCode = null;
 	@XmlAttribute
-	private Long PubTelNum = null;
+	private String CountryCode = null;
 
 	public Publisher() {
 
 	}
 
-	public Publisher(String first, String newAd, Long newTel) {
-		PubName = first;
-		PubAddress = newAd;
-		PubTelNum = newTel;
+	public Publisher(String first, Long newAd, String newTel) {
+		Name = first;
+		PostCode = newAd;
+		CountryCode = newTel;
 	}
 	
 	public Boolean eqauls(Publisher pub) {
-        return this.PubName.equals(pub.PubName) && this.PubAddress.equals(pub.PubAddress) && this.PubTelNum.equals(pub.getTelNum());
+        return this.Name.equals(pub.getName()) && this.PostCode.equals(pub.getPost()) && this.CountryCode.equals(pub.getCode());
     }
 
 	public Long getID() {
@@ -44,27 +44,27 @@ public class Publisher {
 	}
 
 	public String getName() {
-		return PubName;
+		return Name;
 	}
 
 	public void setName(String newTitle) {
-		PubName = newTitle;
+		Name = newTitle;
 	}
 
-	public String getAddress() {
-		return PubAddress;
+	public Long getPost() {
+		return PostCode;
 	}
 
-	public void setAddress(String newTitle) {
-		PubAddress = newTitle;
+	public void setPost(Long newTitle) {
+		PostCode = newTitle;
 	}
 
-	public Long getTelNum() {
-		return PubTelNum;
+	public String getCode() {
+		return CountryCode;
 	}
 
-	public void setTelNum(Long newNum) {
-		PubTelNum = newNum;
+	public void setCode(String newNum) {
+		CountryCode = newNum;
 	}
 
 

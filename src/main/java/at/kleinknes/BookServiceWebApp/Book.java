@@ -23,9 +23,14 @@ public class Book {
 	private String isbn = null;
 	@XmlAttribute
 	private String title = null;
+	@XmlAttribute
+	private String subtitle = null;
+	@XmlAttribute
+	private String description = null;
     @XmlAttribute
     private int pages;
-	
+    @XmlAttribute
+	private String language = null;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
             name="t_book_author",
@@ -35,7 +40,6 @@ public class Book {
     @XmlElementWrapper(name = "authors")
     @XmlElement(name = "author")
     private List<Author> authors;
-
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="PUB_ID")
     @XmlElement
@@ -49,8 +53,20 @@ public class Book {
 		title = first;
 	}
 
-	public Book(Long newsDD, String first) {
-		bookID = newsDD;
+	public Book(String newsDD, String first) {
+		isbn = newsDD;
+		title = first;
+	}
+	
+	public Book(String newsDD, String first, int temp) {
+		isbn = newsDD;
+		title = first;
+		pages = temp;
+	}
+	
+	public Book(Long ID, String newsDD, String first) {
+		bookID = ID;
+		isbn = newsDD;
 		title = first;
 	}
 
@@ -68,6 +84,30 @@ public class Book {
 
 	public void setTitle(String newTitle) {
 		title = newTitle;
+	}
+	
+	public String getSub() {
+		return subtitle;
+	}
+
+	public void setSub(String newTitle) {
+		subtitle = newTitle;
+	}
+	
+	public String getDes() {
+		return description;
+	}
+
+	public void setDes(String newTitle) {
+		description = newTitle;
+	}
+	
+	public String getLang() {
+		return language;
+	}
+
+	public void setLang(String newTitle) {
+		language = newTitle;
 	}
 	
 	public String getISBN() {

@@ -2,6 +2,7 @@ package at.kleinknes.BookServiceWebApp;
 
 import javax.inject.Inject;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import java.util.List;
@@ -18,7 +19,7 @@ public class BookWS {
 	private BookService bookService;
 
 	@WebMethod
-	public String saveBooks(List<Book> books) {
+	public String saveBooks(@WebParam(name="book")List<Book> books) {
 		return bookService.saveBooks(books);
 	}
 

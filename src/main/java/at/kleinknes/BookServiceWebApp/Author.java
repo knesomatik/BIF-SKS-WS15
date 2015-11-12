@@ -18,24 +18,18 @@ public class Author {
 	private String firstname = null;
 	@XmlAttribute
 	private String secondname = null;
-	@XmlAttribute
-	private String AuthAddress = null;
-	@XmlAttribute
-	private Long AuthTelNum = null;
 
 	public Author() {
 
 	}
 
-	public Author(String first, String sec, String newAd, Long newTel) {
+	public Author(String first, String sec) {
 		firstname = first;
 		secondname = sec;
-		AuthAddress = newAd;
-		AuthTelNum = newTel;
 	}
 	
 	public Boolean eqauls(Author auth) {
-        return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname) && this.AuthAddress.equals(auth.AuthAddress) && this.AuthTelNum.equals(auth.AuthTelNum);
+        return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
     }
 
 	public Long getID() {
@@ -71,20 +65,4 @@ public class Author {
 		bDay = newText;
 	}
 	*/
-	public String getAddress() {
-		return AuthAddress;
-	}
-
-	public void setAddress(String newTitle) {
-		AuthAddress = newTitle;
-	}
-
-	public Long getTelNum() {
-		return AuthTelNum;
-	}
-
-	public void setTelNum(Long newNum) {
-		AuthTelNum = newNum;
-	}
-
 }
