@@ -6,13 +6,15 @@ import javax.xml.bind.annotation.*;
 
 @Entity
 @Table(name = "t_author")
-@NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
+@NamedQueries({
+		@NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
+})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Author {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlTransient
+	@XmlAttribute
 	private Long authID = null;
 	@XmlAttribute
 	private String firstname = null;
@@ -27,7 +29,7 @@ public class Author {
 		firstname = first;
 		secondname = sec;
 	}
-	
+
 	public Boolean eqauls(Author auth) {
         return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
     }
@@ -55,7 +57,7 @@ public class Author {
 	public void setSecondName(String newTitle) {
 		secondname = newTitle;
 	}
-	
+
 	/*
 	public Date getBday() {
 		return bDay;
