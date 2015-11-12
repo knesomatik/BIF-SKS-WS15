@@ -4,16 +4,13 @@ package at.kleinknes.BookServiceWebApp;
  * Created by fekle on 12/11/15.
  */
 
-		import javax.inject.Inject;
-		import javax.ws.rs.*;
-
-
-		import java.util.ArrayList;
-		import java.util.List;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import java.util.List;
 
 @Path("/rest/author")
-@Consumes({ "application/json" })
-@Produces({ "application/json" })
+@Consumes({"application/json"})
+@Produces({"application/json"})
 
 public class AuthorREST {
 

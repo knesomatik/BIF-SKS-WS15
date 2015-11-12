@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Random;
 
 @WebServlet("/BookServlet")
 @SuppressWarnings("serial")
@@ -18,15 +17,15 @@ public class BookServlet extends HttpServlet {
 
 	@Inject
 	private BookService bookService;
-	
+
 	@Inject
 	private AuthorService authService;
-	
+
 	private List<Book> newBooks;
 	private List<Author> authors;
-	
+
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		newBooks = bookService.getAllBooks();
 		/*
 		authors = authService.getAllAuthors();
@@ -45,7 +44,7 @@ public class BookServlet extends HttpServlet {
 		Publisher newPub = new Publisher("ViennaBookCompany", "Lacknergasse 40", 6509999999L);
 		book.setPublisher(newPub);
 		newBooks.add(book);
-		
+
 		bookService.saveBooks(newBooks);
 		*/
 		PrintWriter out = response.getWriter();

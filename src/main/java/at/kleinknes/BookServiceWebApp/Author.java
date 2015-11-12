@@ -1,7 +1,9 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 
 
 @Entity
@@ -31,8 +33,8 @@ public class Author {
 	}
 
 	public Boolean eqauls(Author auth) {
-        return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
-    }
+		return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
+	}
 
 	public Long getID() {
 		return authID;

@@ -1,21 +1,20 @@
 package at.kleinknes.BookServiceWebApp;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class AuthorService {
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    public List<Author> getAllAuthors() {
+	public List<Author> getAllAuthors() {
 		addAuthor("test", "test");
 
-        return em.createNamedQuery("Author.selectAll", Author.class).getResultList();
-    }
+		return em.createNamedQuery("Author.selectAll", Author.class).getResultList();
+	}
 
 	public Author getAuthor(Long id) {
 		return em.find(Author.class, id);

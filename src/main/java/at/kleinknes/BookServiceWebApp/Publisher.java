@@ -1,7 +1,10 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
@@ -30,10 +33,10 @@ public class Publisher {
 		PostCode = newAd;
 		CountryCode = newTel;
 	}
-	
+
 	public Boolean eqauls(Publisher pub) {
-        return this.Name.equals(pub.getName()) && this.PostCode.equals(pub.getPost()) && this.CountryCode.equals(pub.getCode());
-    }
+		return this.Name.equals(pub.getName()) && this.PostCode.equals(pub.getPost()) && this.CountryCode.equals(pub.getCode());
+	}
 
 	public Long getID() {
 		return pubID;
