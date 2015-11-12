@@ -1,36 +1,39 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.xml.bind.annotation.*;
+
 
 @Entity
 @Table(name = "t_publisher")
 @NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Pub_id")
+	@XmlTransient
 	private Long pubID = null;
-	@Column(name = "Name")
-	private String name = null;
-	@Column(name = "Address")
-	private String address = null;
-	@Column(name = "TelNum")
-	private Long telNum = null;
-	@OneToMany(mappedBy = "myPublisher")
-	private List<Author> authors;
+	@XmlAttribute
+	private String Name = null;
+	@XmlAttribute
+	private Long PostCode = null;
+	@XmlAttribute
+	private String CountryCode = null;
 
 	public Publisher() {
 
 	}
 
-	public Publisher(Long newID, String first, String newAd, Long newTel) {
-		pubID = newID;
-		name = first;
-		address = newAd;
-		telNum = newTel;
+	public Publisher(String first, Long newAd, String newTel) {
+		Name = first;
+		PostCode = newAd;
+		CountryCode = newTel;
 	}
+	
+	public Boolean eqauls(Publisher pub) {
+        return this.Name.equals(pub.getName()) && this.PostCode.equals(pub.getPost()) && this.CountryCode.equals(pub.getCode());
+    }
 
 	public Long getID() {
 		return pubID;
@@ -41,27 +44,27 @@ public class Publisher {
 	}
 
 	public String getName() {
-		return name;
+		return Name;
 	}
 
 	public void setName(String newTitle) {
-		name = newTitle;
+		Name = newTitle;
 	}
 
-	public String getAddress() {
-		return address;
+	public Long getPost() {
+		return PostCode;
 	}
 
-	public void setAddress(String newTitle) {
-		address = newTitle;
+	public void setPost(Long newTitle) {
+		PostCode = newTitle;
 	}
 
-	public Long getTelNum() {
-		return telNum;
+	public String getCode() {
+		return CountryCode;
 	}
 
-	public void setTelNum(Long newNum) {
-		telNum = newNum;
+	public void setCode(String newNum) {
+		CountryCode = newNum;
 	}
 
 

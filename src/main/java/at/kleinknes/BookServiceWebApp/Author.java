@@ -1,46 +1,36 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import javax.xml.bind.annotation.*;
+
 
 @Entity
 @Table(name = "t_author")
 @NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Author {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Auth_id")
+	@XmlTransient
 	private Long authID = null;
-	@Column(name = "Firstname")
+	@XmlAttribute
 	private String firstname = null;
-	@Column(name = "Secondname")
+	@XmlAttribute
 	private String secondname = null;
-	@Column(name = "Bday")
-	private Date bDay = null;
-	@Column(name = "Address")
-	private String address = null;
-	@Column(name = "TelNum")
-	private Long telNum = null;
-	@OneToMany(mappedBy = "myBooks")
-	private List<Book> books;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PUB_ID")
-	private Publisher myPublisher;
 
 	public Author() {
 
 	}
 
-	public Author(Long newID, String first, String sec, Date newBday, String newAd, Long newTel) {
-		authID = newID;
+	public Author(String first, String sec) {
 		firstname = first;
 		secondname = sec;
-		bDay = newBday;
-		address = newAd;
-		telNum = newTel;
 	}
+	
+	public Boolean eqauls(Author auth) {
+        return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
+    }
 
 	public Long getID() {
 		return authID;
@@ -65,7 +55,8 @@ public class Author {
 	public void setSecondName(String newTitle) {
 		secondname = newTitle;
 	}
-
+	
+	/*
 	public Date getBday() {
 		return bDay;
 	}
@@ -73,21 +64,5 @@ public class Author {
 	public void setBday(Date newText) {
 		bDay = newText;
 	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String newTitle) {
-		address = newTitle;
-	}
-
-	public Long getTelNum() {
-		return telNum;
-	}
-
-	public void setTelNum(Long newNum) {
-		telNum = newNum;
-	}
-
+	*/
 }
