@@ -1,8 +1,10 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import java.util.List;
 
 @Stateless
@@ -13,7 +15,7 @@ public class AuthorService {
 	public List<Author> getAllAuthors() {
 		return em.createNamedQuery("Author.selectAll", Author.class).getResultList();
 	}
-
+	
 	public Author getAuthor(Long id) {
 		return em.find(Author.class, id);
 	}

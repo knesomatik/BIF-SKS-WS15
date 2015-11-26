@@ -6,6 +6,8 @@ package at.kleinknes.BookServiceWebApp;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
 import java.util.List;
 
 @Path("/rest/author")
@@ -18,13 +20,14 @@ public class AuthorREST {
 	private AuthorService authorService;
 
 	@GET
-	@Path("/")
+	//@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Author> getAuthors() {
 		return authorService.getAllAuthors();
 	}
 
 	@GET
 	@Path("/{id}")
+	//@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Author getAuthor(@PathParam("id") Long id) {
 		return authorService.getAuthor(id);
 	}
