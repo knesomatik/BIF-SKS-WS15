@@ -17,7 +17,7 @@ public class BookWS {
 	private BookService bookService;
 
 	@WebMethod
-	public String saveBooks(@WebParam(name = "book") List<Book> books) {
+	public boolean saveBooks(@WebParam(name = "book") List<Book> books) {
 		return bookService.saveBooks(books);
 	}
 

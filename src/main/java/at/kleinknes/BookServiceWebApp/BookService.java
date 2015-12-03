@@ -12,29 +12,50 @@ public class BookService {
 	private EntityManager em;
 
 	@Inject
-	private PublisherService pubService;
-	private List<Publisher> pubList;
+	private PublisherService publisherService;
 
 	@Inject
-	private AuthorService authService;
-	private List<Author> authList;
+	private AuthorService authorService;
 
-	public String saveBooks(List<Book> books) {
 
-		if (authList == null) {
-			authList = authService.getAllAuthors();
+	private void checkValue(Object o) throws Exception{
+		if (o != null && !o.equals(0) && !o.equals("")) return;
+		throw new Exception();
+	}
+
+	public boolean verifyBook(Book book){
+
+		try{
+			checkValue(book.getAuthors());
+			checkValue(book.getID());
+			checkValue(book.getTitle());
+			checkValue(book.getPublisher());
+
+			if(!publisherService.verifyPublisher(book.getPublisher())) return false;
+			if(publisherService.getPublisher(book.getPublisher().getID()) == null) return false;
+
+			for(Author author : book.getAuthors()){
+				if(!authorService.verifyAuthor(author)) return false;
+
+				if(authorService.getAuthor(author.getID()) == null) return false;
+			}
+
+			return true;
+		}catch (Exception ex){
+			return false;
 		}
 
-		if (pubList == null) {
-			pubList = pubService.getAllPublishers();
+	}
+
+	public boolean saveBooks(List<Book> books) {
+		for(Book book: books){
+			if(!verifyBook(book)) return false;
 		}
 
-		if (checkDB(books)) {
-			books.forEach(em::persist);
-			return "Everything OK";
-		} else {
-			return "ERROR inserting Books in DB";
-		}
+
+		books.forEach(em::persist);
+
+		return true;
 	}
 
 
@@ -46,50 +67,4 @@ public class BookService {
 		return em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", "%" + title + "%").getResultList();
 	}
 
-	public Boolean checkDB(List<Book> books) {
-		Boolean goOn = true;
-		Long ID = 0L;
-		int index = 0;
-		for (Book b : books) {
-
-			for (Publisher pubDB : pubList) {
-				if (pubDB.eqauls(b.getPublisher())) {
-					ID = pubDB.getID();
-				} else {
-					ID = 0L;
-				}
-			}
-
-			if (ID == 0L) {
-				goOn = false;
-				break;
-			} else {
-				b.getPublisher().setID(ID);
-			}
-			for (Author auth : b.getAuthors()) {
-				ID = authCheck(auth);
-				if (ID == 0L) {
-					goOn = false;
-					break;
-				} else {
-					b.getAuthors().get(index).setID(ID);
-				}
-				index++;
-			}
-			index = 0;
-		}
-		return goOn;
-	}
-
-	private Long authCheck(Author auth) {
-		Long found = 0L;
-
-		for (Author authDB : authList) {
-			if (authDB.eqauls(auth)) {
-				found = authDB.getID();
-				break;
-			}
-		}
-		return found;
-	}
 }

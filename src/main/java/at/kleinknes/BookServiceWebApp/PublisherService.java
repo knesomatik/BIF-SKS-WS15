@@ -1,6 +1,7 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -9,6 +10,30 @@ import java.util.List;
 public class PublisherService {
 	@PersistenceContext
 	private EntityManager em;
+
+	@Inject
+	private PublisherService pubService;
+
+	@Inject
+	private AuthorService authService;
+
+	private void checkValue(Object o) throws Exception{
+		if (o != null && !o.equals(0) && !o.equals("")) return;
+		throw new Exception();
+	}
+
+	public boolean verifyPublisher(Publisher publisher){
+
+		try {
+			checkValue(publisher.getID());
+			checkValue(publisher.getCode());
+			checkValue(publisher.getName());
+
+			return true;
+		}catch (Exception ex){
+			return false;
+		}
+	}
 
 	public List<Publisher> getAllPublishers() {
 		return em.createNamedQuery("Publisher.selectAll", Publisher.class).getResultList();
