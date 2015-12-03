@@ -4,7 +4,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.List;
 
 @Stateless
@@ -18,12 +17,12 @@ public class AuthorService {
 	@Inject
 	private AuthorService authService;
 
-	private void checkValue(Object o) throws Exception{
+	private void checkValue(Object o) throws Exception {
 		if (o != null && !o.equals(0) && !o.equals("")) return;
 		throw new Exception();
 	}
 
-	public boolean verifyAuthor(Author author){
+	public boolean verifyAuthor(Author author) {
 
 		try {
 			checkValue(author.getID());
@@ -31,11 +30,10 @@ public class AuthorService {
 			checkValue(author.getSecondName());
 
 			return true;
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return false;
 		}
 	}
-
 
 
 	public List<Author> getAllAuthors() {

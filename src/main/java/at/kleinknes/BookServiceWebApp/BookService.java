@@ -18,40 +18,39 @@ public class BookService {
 	private AuthorService authorService;
 
 
-	private void checkValue(Object o) throws Exception{
+	private void checkValue(Object o) throws Exception {
 		if (o != null && !o.equals(0) && !o.equals("")) return;
 		throw new Exception();
 	}
 
-	public boolean verifyBook(Book book){
+	public boolean verifyBook(Book book) {
 
-		try{
+		try {
 			checkValue(book.getAuthors());
 			checkValue(book.getID());
 			checkValue(book.getTitle());
 			checkValue(book.getPublisher());
 
-			if(!publisherService.verifyPublisher(book.getPublisher())) return false;
-			if(publisherService.getPublisher(book.getPublisher().getID()) == null) return false;
+			if (!publisherService.verifyPublisher(book.getPublisher())) return false;
+			if (publisherService.getPublisher(book.getPublisher().getID()) == null) return false;
 
-			for(Author author : book.getAuthors()){
-				if(!authorService.verifyAuthor(author)) return false;
+			for (Author author : book.getAuthors()) {
+				if (!authorService.verifyAuthor(author)) return false;
 
-				if(authorService.getAuthor(author.getID()) == null) return false;
+				if (authorService.getAuthor(author.getID()) == null) return false;
 			}
 
 			return true;
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return false;
 		}
 
 	}
 
 	public boolean saveBooks(List<Book> books) {
-		for(Book book: books){
-			if(!verifyBook(book)) return false;
+		for (Book book : books) {
+			if (!verifyBook(book)) return false;
 		}
-
 
 		books.forEach(em::persist);
 

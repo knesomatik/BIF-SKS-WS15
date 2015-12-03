@@ -47,53 +47,54 @@
 		h1 {
 			font-size: 4rem;
 		}
-		#content{
+
+		#content {
 			color: white;
 		}
 
 	</style>
-<script>
-$(document).ready(function() {
-	refresh();
-	
-	$('body').on('click', '.pub', function() {
-		
-		var info = $(this).text();
-		//alert(info);
-		$.ajax({
-			url: "http://localhost:8080/rest/publisher",
-			type: "GET",
-			dataType: "json",				
-			success: function(publisher) {
-				var html2 = "";
-				for (var i = 0; i < publisher.length; i++) {
-					if(info == publisher[i].Name){
-						html2 = "Name= " + publisher[i].Name + "\nPostCode= " + publisher[i].PostCode + "\nCountryCode= " + publisher[i].CountryCode;
-					}
-				}
-				alert(html2);
-			}
-		});
-		//alert($(this).text());
-	});
-});
+	<script>
+		$(document).ready(function () {
+			refresh();
 
-function refresh() {
-	$.ajax({
-		url: "http://localhost:8080/rest/publisher",
-		type: "GET",
-		dataType: "json",				
-		success: function(publisher) {
-			var html = "";
-			for (var i = 0; i < publisher.length; i++) {
-				html += "<li class='pub'>" + publisher[i].Name + "</li>";
-			}
-			
-			document.getElementById("content").innerHTML = html;
+			$('body').on('click', '.pub', function () {
+
+				var info = $(this).text();
+				//alert(info);
+				$.ajax({
+					url: "http://localhost:8080/rest/publisher",
+					type: "GET",
+					dataType: "json",
+					success: function (publisher) {
+						var html2 = "";
+						for (var i = 0; i < publisher.length; i++) {
+							if (info == publisher[i].Name) {
+								html2 = "Name= " + publisher[i].Name + "\nPostCode= " + publisher[i].PostCode + "\nCountryCode= " + publisher[i].CountryCode;
+							}
+						}
+						alert(html2);
+					}
+				});
+				//alert($(this).text());
+			});
+		});
+
+		function refresh() {
+			$.ajax({
+				url: "http://localhost:8080/rest/publisher",
+				type: "GET",
+				dataType: "json",
+				success: function (publisher) {
+					var html = "";
+					for (var i = 0; i < publisher.length; i++) {
+						html += "<li class='pub'>" + publisher[i].Name + "</li>";
+					}
+
+					document.getElementById("content").innerHTML = html;
+				}
+			});
 		}
-	});
-}
-</script>
+	</script>
 </head>
 <body>
 <div class="container">
@@ -108,8 +109,8 @@ function refresh() {
 		<input type="button" value="Refresh" onclick="refresh();">
 	</form>
 	<div id="wrap">
-	<ul id="content">
-	</ul>
+		<ul id="content">
+		</ul>
 	</div>
 </div>
 </body>

@@ -11,6 +11,7 @@ import java.util.List;
 		name = "BookWS",
 		serviceName = "BookWebService",
 		portName = "BookWebServicePort")
+
 public class BookWS {
 
 	@Inject

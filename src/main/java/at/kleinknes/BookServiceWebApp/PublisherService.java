@@ -17,12 +17,12 @@ public class PublisherService {
 	@Inject
 	private AuthorService authService;
 
-	private void checkValue(Object o) throws Exception{
+	private void checkValue(Object o) throws Exception {
 		if (o != null && !o.equals(0) && !o.equals("")) return;
 		throw new Exception();
 	}
 
-	public boolean verifyPublisher(Publisher publisher){
+	public boolean verifyPublisher(Publisher publisher) {
 
 		try {
 			checkValue(publisher.getID());
@@ -30,7 +30,7 @@ public class PublisherService {
 			checkValue(publisher.getName());
 
 			return true;
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return false;
 		}
 	}
