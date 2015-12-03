@@ -55,7 +55,7 @@ public class BookService {
 			}
 
 			books.forEach(em::persist);
-		}catch (Exception e){
+		} catch (Exception e) {
 			return "error " + e.getMessage();
 		}
 
