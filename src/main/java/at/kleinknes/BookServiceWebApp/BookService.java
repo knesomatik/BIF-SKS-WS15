@@ -47,14 +47,19 @@ public class BookService {
 
 	}
 
-	public boolean saveBooks(List<Book> books) {
-		for (Book book : books) {
-			if (!verifyBook(book)) return false;
+	public String saveBooks(List<Book> books) {
+
+		try {
+			for (Book book : books) {
+				if (!verifyBook(book)) return "invalid data";
+			}
+
+			books.forEach(em::persist);
+		}catch (Exception e){
+			return "error " + e.getMessage();
 		}
 
-		books.forEach(em::persist);
-
-		return true;
+		return "success";
 	}
 
 
