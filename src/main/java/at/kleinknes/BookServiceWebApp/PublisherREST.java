@@ -31,8 +31,8 @@ public class PublisherREST {
 
 	@PUT
 	@Path("/")
-	public Publisher addPublisher(@QueryParam("name") String name, @QueryParam("postcode") Long postcode, @QueryParam("countrycode") String countrycode) {
-		return publisherService.addPublisher(name, postcode, countrycode);
+	public Publisher addPublisher(@QueryParam("data") Publisher publisher) {
+		return publisherService.addPublisher(publisher.getName(), publisher.getPost(), publisher.getCode());
 	}
 
 	@POST

@@ -1,9 +1,13 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
@@ -12,6 +16,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 		@NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@XmlRootElement(name="author")
 public class Author {
 
 	@Id
@@ -21,7 +28,7 @@ public class Author {
 	@XmlAttribute
 	private String firstname = null;
 	@XmlAttribute
-	private String secondname = null;
+	private String lastname = null;
 
 	public Author() {
 
@@ -29,44 +36,30 @@ public class Author {
 
 	public Author(String first, String sec) {
 		firstname = first;
-		secondname = sec;
+		lastname = sec;
 	}
 
-	public Boolean eqauls(Author auth) {
-		return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
-	}
-
-	public Long getID() {
+	public Long getAuthID() {
 		return authID;
 	}
 
-	public void setID(Long newID) {
-		authID = newID;
+	public void setAuthID(Long authID) {
+		this.authID = authID;
 	}
 
-	public String getFirstName() {
+	public String getFirstname() {
 		return firstname;
 	}
 
-	public void setFirstName(String newTitle) {
-		firstname = newTitle;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getSecondName() {
-		return secondname;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setSecondName(String newTitle) {
-		secondname = newTitle;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
-
-	/*
-	public Date getBday() {
-		return bDay;
-	}
-
-	public void setBday(Date newText) {
-		bDay = newText;
-	}
-	*/
 }

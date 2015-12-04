@@ -25,9 +25,9 @@ public class AuthorService {
 	public boolean verifyAuthor(Author author) {
 
 		try {
-			checkValue(author.getID());
-			checkValue(author.getFirstName());
-			checkValue(author.getSecondName());
+			checkValue(author.getAuthID());
+			checkValue(author.getFirstname());
+			checkValue(author.getLastname());
 
 			return true;
 		} catch (Exception ex) {
@@ -46,16 +46,16 @@ public class AuthorService {
 
 	public Author addAuthor(String firstname, String secondname) {
 		Author a = new Author();
-		a.setFirstName(firstname);
-		a.setSecondName(secondname);
+		a.setFirstname(firstname);
+		a.setLastname(secondname);
 		em.persist(a);
 		return a;
 	}
 
 	public Author updateAuthor(Long id, String firstname, String secondname) {
 		Author a = em.find(Author.class, id);
-		a.setFirstName(firstname);
-		a.setSecondName(secondname);
+		a.setFirstname(firstname);
+		a.setLastname(secondname);
 		em.persist(a);
 		return a;
 	}

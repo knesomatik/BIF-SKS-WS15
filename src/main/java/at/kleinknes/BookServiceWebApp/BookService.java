@@ -37,7 +37,7 @@ public class BookService {
 			for (Author author : book.getAuthors()) {
 				if (!authorService.verifyAuthor(author)) return false;
 
-				if (authorService.getAuthor(author.getID()) == null) return false;
+				if (authorService.getAuthor(author.getAuthID()) == null) return false;
 			}
 
 			return true;
