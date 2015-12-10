@@ -9,9 +9,8 @@ import javax.ws.rs.*;
 import java.util.List;
 
 @Path("/rest/publisher")
-@Consumes({"application/json"})
-@Produces({"application/json"})
-
+@Consumes("*/*")
+@Produces("application/json")
 public class PublisherREST {
 
 	@Inject
@@ -31,13 +30,14 @@ public class PublisherREST {
 
 	@PUT
 	@Path("/")
-	public Publisher addPublisher(@QueryParam("data") Publisher publisher) {
-		return publisherService.addPublisher(publisher.getName(), publisher.getPost(), publisher.getCode());
+	public Publisher addPublisher(@FormParam("name") String theName) {
+		System.err.println("\nPUBLISHER:\n" + theName + "\nPUBLISHEREND\n");
+		return publisherService.addPublisher(theName);
 	}
 
 	@POST
 	@Path("/{id}")
-	public Publisher updatePublisher(@PathParam("id") Long id, @QueryParam("name") String name, @QueryParam("postcode") Long postcode, @QueryParam("countrycode") String countrycode) {
+	public Publisher updatePublisher(@PathParam("id") Long id, @QueryParam("name") String name, @QueryParam("postcode") String postcode, @QueryParam("countrycode") String countrycode) {
 		return publisherService.updatePublisher(id, name, postcode, countrycode);
 	}
 

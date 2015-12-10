@@ -19,29 +19,50 @@ public class BookService {
 
 
 	private void checkValue(Object o) throws Exception {
-		if (o != null && !o.equals(0) && !o.equals("")) return;
-		throw new Exception();
+		if (o != null && !o.equals(0) && !o.equals("")) {
+			return;
+		}
+		System.err.println("BOOK CHECK: MISSING VALUES");
+		throw new Exception("BOOK CHECK: MISSING VALUES");
 	}
 
 	public boolean verifyBook(Book book) {
 
 		try {
+			System.err.println("Trying book");
 			checkValue(book.getAuthors());
-			checkValue(book.getID());
+			System.err.println("Authors" + book.getAuthors().toString());
 			checkValue(book.getTitle());
+			System.err.println("Title" + book.getTitle());
 			checkValue(book.getPublisher());
+			System.err.println("Publisher" + book.getPublisher().toString());
 
-			if (!publisherService.verifyPublisher(book.getPublisher())) return false;
-			if (publisherService.getPublisher(book.getPublisher().getID()) == null) return false;
+			if (!publisherService.verifyPublisher(book.getPublisher())) {
+				System.err.println("BOOK IMPORT: PUBLISHER INVALID");
+				return false;
+			}
+
+			if (publisherService.findFirst(book.getPublisher().getName()) == null) {
+				System.err.println("BOOK IMPORT: PUBLISHER ID NULL");
+				return false;
+			}
 
 			for (Author author : book.getAuthors()) {
-				if (!authorService.verifyAuthor(author)) return false;
+				if (!authorService.verifyAuthor(author)) {
+					System.err.println("BOOK IMPORT: AUTHOR INVALID");
+					return false;
+				}
 
-				if (authorService.getAuthor(author.getAuthID()) == null) return false;
+				if (authorService.getAuthor(author.getAuthID()) == null) {
+					System.err.println("BOOK IMPORT: AUTHOR ID NULL");
+					return false;
+				}
 			}
 
 			return true;
 		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.err.println("BOOK IMPORT: " + ex.getMessage());
 			return false;
 		}
 

@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@XmlRootElement(name="author")
+@XmlRootElement(name = "author")
 public class Author {
 
 	@Id
@@ -34,9 +34,9 @@ public class Author {
 
 	}
 
-	public Author(String first, String sec) {
-		firstname = first;
-		lastname = sec;
+	public Author(String name) {
+
+
 	}
 
 	public Long getAuthID() {

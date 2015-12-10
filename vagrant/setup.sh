@@ -9,7 +9,11 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/opt/jboss/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 -Djboss.server.log.dir=/vagrant-logs
+User=root
+Group=root
+ExecStartPre=/usr/bin/chmod -R 777 /vagrant-data
+ExecStartPre=/usr/bin/chmod -R 777 /vagrant-logs
+ExecStart=/opt/jboss/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 -Djboss.server.log.dir=/vagrant-logs -Djava.awt.headless=true
 TimeoutSec=300
 Restart=always
 RestartSec=30
@@ -20,23 +24,26 @@ WantedBy=multi-user.target
 
 (
 	# update system
-	yum -y update
+	#yum -y update
 
 	# install java
-	yum -y install java-1.8.0-openjdk
+	yum -y install java-1.8.0-openjdk-headless
 
 	# set wildfly variables
-	export WILDFLY_VERSION="10.0.0.CR3"
-	export WILDFLY_SHA1="c14453890657e05fae0e2765c9dca8a35b2b2096"
+	export WILDFLY_VERSION="9.0.2.Final"
 	export JBOSS_HOME="/opt/jboss/wildfly"
 
 	# create dir
 	mkdir -p ${JBOSS_HOME}
 
+	chmod -R 777 /vagrant-data
+	chmod -R 777 /vagrant-logs
+	chmod -R 777 $JBOSS_HOME
+
+
 	# download, verify and install wildfly
 	cd $HOME \
 	&& curl -O https://download.jboss.org/wildfly/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz \
-	&& sha1sum wildfly-${WILDFLY_VERSION}.tar.gz | grep ${WILDFLY_SHA1} \
 	&& tar xf wildfly-${WILDFLY_VERSION}.tar.gz \
 	&& mv $HOME/wildfly-${WILDFLY_VERSION}/* ${JBOSS_HOME}/ \
 	&& rm wildfly-${WILDFLY_VERSION}.tar.gz
