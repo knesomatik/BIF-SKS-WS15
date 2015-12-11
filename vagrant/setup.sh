@@ -9,7 +9,11 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/opt/jboss/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 -Djboss.server.log.dir=/vagrant-logs
+User=root
+Group=root
+ExecStartPre=/usr/bin/chmod -R 777 /vagrant-data
+ExecStartPre=/usr/bin/chmod -R 777 /vagrant-logs
+ExecStart=/opt/jboss/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 -Djboss.server.log.dir=/vagrant-logs -Djava.awt.headless=true
 TimeoutSec=300
 Restart=always
 RestartSec=30
@@ -20,11 +24,18 @@ WantedBy=multi-user.target
 
 (
 	# update system
+<<<<<<< HEAD
 	yum -y distro-sync
 
 	# install java
 	# unfortunately we can't use java-headless, because then WildFly bugs araound -- TODO maybe investigate this further?
 	yum -y install java-1.8.0-openjdk
+=======
+	#yum -y update
+
+	# install java
+	yum -y install java-1.8.0-openjdk-headless
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 
 	# set wildfly variables
 	export WILDFLY_VERSION="9.0.2.Final"
@@ -32,6 +43,11 @@ WantedBy=multi-user.target
 
 	# create dir
 	mkdir -p ${JBOSS_HOME}
+
+	chmod -R 777 /vagrant-data
+	chmod -R 777 /vagrant-logs
+	chmod -R 777 $JBOSS_HOME
+
 
 	# download, verify and install wildfly
 	cd $HOME \

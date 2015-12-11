@@ -25,6 +25,10 @@ public class AuthorService {
 	public boolean verifyAuthor(Author author) {
 
 		try {
+<<<<<<< HEAD
+=======
+			checkValue(author.getAuthID());
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 			checkValue(author.getFirstname());
 			checkValue(author.getLastname());
 
@@ -56,7 +60,11 @@ public class AuthorService {
 	public Author addAuthor(String firstname, String lastna) {
 		Author a = new Author();
 		a.setFirstname(firstname);
+<<<<<<< HEAD
 		a.setLastname(lastna);
+=======
+		a.setLastname(secondname);
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 		em.persist(a);
 		return a;
 	}

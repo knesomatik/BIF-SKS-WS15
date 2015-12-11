@@ -12,9 +12,6 @@ public class PublisherService {
 	private EntityManager em;
 
 	@Inject
-	private PublisherService pubService;
-
-	@Inject
 	private AuthorService authService;
 
 	private void checkValue(Object o) throws Exception {
@@ -25,11 +22,18 @@ public class PublisherService {
 	public boolean verifyPublisher(Publisher publisher) {
 
 		try {
+<<<<<<< HEAD
 			checkValue(publisher.getCountrycode());
+=======
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 			checkValue(publisher.getName());
+			System.err.println("PUBLISHER NAME:" + publisher.getName());
+			checkValue(publisher.getPostcode());
+			System.err.println("PUBLISHER CODE:" + publisher.getPostcode());
 
 			return true;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return false;
 		}
 	}
@@ -43,6 +47,7 @@ public class PublisherService {
 	}
 
 	public Publisher findFirst(String name) {
+<<<<<<< HEAD
 		Publisher data = null;
 		try {
 			data = em.createNamedQuery("Publisher.findFirst", Publisher.class).setParameter("name", name).getResultList().get(0);
@@ -54,6 +59,22 @@ public class PublisherService {
 	}
 
 	public Publisher addPublisher(String name, Long postcode, String countrycode) {
+=======
+		return em.createNamedQuery("Publisher.findFirst", Publisher.class).setParameter("queryname", name).getResultList().get(0);
+	}
+
+
+	public Publisher addPublisher(String name) {
+		Publisher a = new Publisher();
+		a.setName(name);
+		a.setPostcode("123");
+		a.setCountrycode("123");
+		em.persist(a);
+		return a;
+	}
+
+	public Publisher addPublisher(String name, String postcode, String countrycode) {
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 		Publisher a = new Publisher();
 		a.setName(name);
 		a.setPostcode(postcode);
@@ -62,7 +83,7 @@ public class PublisherService {
 		return a;
 	}
 
-	public Publisher updatePublisher(Long id, String name, Long postcode, String countrycode) {
+	public Publisher updatePublisher(Long id, String name, String postcode, String countrycode) {
 		Publisher a = em.find(Publisher.class, id);
 		a.setName(name);
 		a.setPostcode(postcode);

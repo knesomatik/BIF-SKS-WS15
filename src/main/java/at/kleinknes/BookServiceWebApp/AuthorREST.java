@@ -9,15 +9,24 @@ import javax.ws.rs.*;
 import java.util.List;
 
 @Path("/rest/author")
+<<<<<<< HEAD
 @Consumes({"*/*"})
 @Produces({"application/json"})
 
+=======
+@Consumes("*/*")
+@Produces("application/json")
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 public class AuthorREST {
 
 	@Inject
 	private AuthorService authorService;
 
 	@GET
+<<<<<<< HEAD
+=======
+	@Path("/")
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 	public List<Author> getAuthors() {
 		return authorService.getAllAuthors();
 	}
@@ -30,8 +39,14 @@ public class AuthorREST {
 
 	@PUT
 	@Path("/")
+<<<<<<< HEAD
 	public Author addAuthor(@FormParam("firstname") String firstname, @FormParam("lastname") String lastname) {
 		return authorService.addAuthor(firstname, lastname);
+=======
+	public Author addAuthor(@FormParam("firstname") String firstName, @FormParam("lastname") String lastName) {
+		System.err.println("\nAUTHOR:\n" + firstName + " " + lastName + "\nAUTHOREND\n");
+		return authorService.addAuthor(firstName, lastName);
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 	}
 
 	@POST

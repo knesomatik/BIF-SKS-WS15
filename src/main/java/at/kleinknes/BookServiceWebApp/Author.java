@@ -1,9 +1,13 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
@@ -15,6 +19,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 })
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@XmlRootElement(name = "author")
 public class Author {
 
 	@Id
@@ -30,6 +37,7 @@ public class Author {
 
 	}
 
+<<<<<<< HEAD
 	public Author(String first, String sec) {
 		firstname = first;
 		lastname = sec;
@@ -57,5 +65,34 @@ public class Author {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
+=======
+	public Author(String name) {
+
+
+	}
+
+	public Long getAuthID() {
+		return authID;
+	}
+
+	public void setAuthID(Long authID) {
+		this.authID = authID;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 	}
 }

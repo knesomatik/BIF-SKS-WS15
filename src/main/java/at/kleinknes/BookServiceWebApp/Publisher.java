@@ -10,7 +10,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 @Table(name = "t_publisher")
 @NamedQueries({
 		@NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n"),
+<<<<<<< HEAD
 		@NamedQuery(name = "Publisher.findFirst", query = "SELECT n FROM Publisher n WHERE lower(n.name) LIKE lower(:name)")
+=======
+		@NamedQuery(name = "Publisher.findFirst", query = "SELECT n FROM Publisher n WHERE lower(n.name) LIKE lower(:queryname)")
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Publisher {
@@ -22,7 +26,11 @@ public class Publisher {
 	@XmlAttribute
 	private String name = null;
 	@XmlAttribute
+<<<<<<< HEAD
 	private Long postcode = null;
+=======
+	private String postcode = null;
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 	@XmlAttribute
 	private String countrycode = null;
 
@@ -30,6 +38,14 @@ public class Publisher {
 
 	}
 
+<<<<<<< HEAD
+=======
+	public Publisher(String whatl) {
+
+	}
+
+
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 	public Long getPubID() {
 		return pubID;
 	}
@@ -46,6 +62,7 @@ public class Publisher {
 		this.name = name;
 	}
 
+<<<<<<< HEAD
 	public Long getPostcode() {
 		return postcode;
 	}
@@ -60,5 +77,21 @@ public class Publisher {
 
 	public void setCountrycode(String countrycode) {
 		this.countrycode = countrycode;
+=======
+	public String getCountrycode() {
+		return countrycode;
+	}
+
+	public void setCountrycode(String countrycode) {
+		this.countrycode = countrycode;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+>>>>>>> 4ea4b75e1cc830f55657c12a80416b08abf8a0ee
 	}
 }

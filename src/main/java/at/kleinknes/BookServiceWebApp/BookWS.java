@@ -10,15 +10,15 @@ import java.util.List;
 		name = "BookWS",
 		serviceName = "BookWebService",
 		portName = "BookWebServicePort")
-
-public class BookWS {
+public class BookWS{
 
 	@Inject
 	private BookService bookService;
 
 	@WebMethod
-	public String saveBooks(@WebParam(name = "book") List<Book> books) {
-		return bookService.saveBooks(books);
+	public boolean saveBooks(@WebParam(name = "book") List<Book> books) {
+		bookService.saveBooks(books);
+		return true;
 	}
 
 	@WebMethod
