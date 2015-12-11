@@ -25,9 +25,8 @@ public class AuthorService {
 	public boolean verifyAuthor(Author author) {
 
 		try {
-			checkValue(author.getID());
-			checkValue(author.getFirstName());
-			checkValue(author.getSecondName());
+			checkValue(author.getFirstname());
+			checkValue(author.getLastname());
 
 			return true;
 		} catch (Exception ex) {
@@ -35,6 +34,16 @@ public class AuthorService {
 		}
 	}
 
+	public Author findFirst(String firstname, String lastname ){
+		Author data = null;
+		try{
+			data = em.createNamedQuery("Author.findFirst", Author.class).setParameter("firstname", firstname).setParameter("lastname", lastname).getResultList().get(0);
+		}catch (Exception ex){
+			ex.printStackTrace();
+			System.err.println("Author not found: " + firstname +  " " + lastname);
+		}
+		return data;
+	}
 
 	public List<Author> getAllAuthors() {
 		return em.createNamedQuery("Author.selectAll", Author.class).getResultList();
@@ -44,18 +53,18 @@ public class AuthorService {
 		return em.find(Author.class, id);
 	}
 
-	public Author addAuthor(String firstname, String secondname) {
+	public Author addAuthor(String firstname, String lastna) {
 		Author a = new Author();
-		a.setFirstName(firstname);
-		a.setSecondName(secondname);
+		a.setFirstname(firstname);
+		a.setLastname(lastna);
 		em.persist(a);
 		return a;
 	}
 
 	public Author updateAuthor(Long id, String firstname, String secondname) {
 		Author a = em.find(Author.class, id);
-		a.setFirstName(firstname);
-		a.setSecondName(secondname);
+		a.setFirstname(firstname);
+		a.setLastname(secondname);
 		em.persist(a);
 		return a;
 	}

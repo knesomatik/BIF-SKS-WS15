@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import java.util.List;
 
 @Path("/rest/publisher")
-@Consumes({"application/json"})
+@Consumes({"*/*"})
 @Produces({"application/json"})
 
 public class PublisherREST {
@@ -31,8 +31,8 @@ public class PublisherREST {
 
 	@PUT
 	@Path("/")
-	public Publisher addPublisher(@QueryParam("name") String name, @QueryParam("postcode") Long postcode, @QueryParam("countrycode") String countrycode) {
-		return publisherService.addPublisher(name, postcode, countrycode);
+	public Publisher addPublisher(@FormParam("name") String name, @FormParam("postcode") String postcode, @FormParam("countrycode") String countrycode) {
+		return publisherService.addPublisher(name, Long.valueOf(postcode), countrycode);
 	}
 
 	@POST

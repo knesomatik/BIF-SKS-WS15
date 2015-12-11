@@ -25,8 +25,7 @@ public class PublisherService {
 	public boolean verifyPublisher(Publisher publisher) {
 
 		try {
-			checkValue(publisher.getID());
-			checkValue(publisher.getCode());
+			checkValue(publisher.getCountrycode());
 			checkValue(publisher.getName());
 
 			return true;
@@ -43,11 +42,22 @@ public class PublisherService {
 		return em.find(Publisher.class, id);
 	}
 
+	public Publisher findFirst(String name) {
+		Publisher data = null;
+		try {
+			data = em.createNamedQuery("Publisher.findFirst", Publisher.class).setParameter("name", name).getResultList().get(0);
+		}catch (Exception ex){
+			System.err.println("Publisher not found: " + name);
+		}
+
+		return data;
+	}
+
 	public Publisher addPublisher(String name, Long postcode, String countrycode) {
 		Publisher a = new Publisher();
 		a.setName(name);
-		a.setPost(postcode);
-		a.setCode(countrycode);
+		a.setPostcode(postcode);
+		a.setCountrycode(countrycode);
 		em.persist(a);
 		return a;
 	}
@@ -55,8 +65,8 @@ public class PublisherService {
 	public Publisher updatePublisher(Long id, String name, Long postcode, String countrycode) {
 		Publisher a = em.find(Publisher.class, id);
 		a.setName(name);
-		a.setPost(postcode);
-		a.setCode(countrycode);
+		a.setPostcode(postcode);
+		a.setCountrycode(countrycode);
 		em.persist(a);
 		return a;
 	}

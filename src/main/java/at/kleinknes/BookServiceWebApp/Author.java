@@ -9,8 +9,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 @Entity
 @Table(name = "t_author")
 @NamedQueries({
-		@NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n")
+		@NamedQuery(name = "Author.selectAll", query = "SELECT n FROM Author n"),
+		@NamedQuery(name = "Author.findFirst", query = "SELECT n FROM Author n WHERE lower(n.firstname) LIKE lower(:firstname) AND lower(n.lastname) LIKE lower(:lastname))")
+
 })
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Author {
 
@@ -21,7 +24,7 @@ public class Author {
 	@XmlAttribute
 	private String firstname = null;
 	@XmlAttribute
-	private String secondname = null;
+	private String lastname = null;
 
 	public Author() {
 
@@ -29,44 +32,30 @@ public class Author {
 
 	public Author(String first, String sec) {
 		firstname = first;
-		secondname = sec;
+		lastname = sec;
 	}
 
-	public Boolean eqauls(Author auth) {
-		return this.firstname.equals(auth.firstname) && this.secondname.equals(auth.secondname);
+	public String getLastname() {
+		return lastname;
 	}
 
-	public Long getID() {
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public Long getAuthID() {
 		return authID;
 	}
 
-	public void setID(Long newID) {
-		authID = newID;
+	public void setAuthID(Long authID) {
+		this.authID = authID;
 	}
 
-	public String getFirstName() {
+	public String getFirstname() {
 		return firstname;
 	}
 
-	public void setFirstName(String newTitle) {
-		firstname = newTitle;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
-
-	public String getSecondName() {
-		return secondname;
-	}
-
-	public void setSecondName(String newTitle) {
-		secondname = newTitle;
-	}
-
-	/*
-	public Date getBday() {
-		return bDay;
-	}
-
-	public void setBday(Date newText) {
-		bDay = newText;
-	}
-	*/
 }

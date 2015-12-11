@@ -14,8 +14,10 @@ Vagrant.configure(2) do |config|
 
 	# options for parallels provider
 	config.vm.provider 'parallels' do |v, override|
-		v.memory = 1024
+		v.update_guest_tools = true
+		v.memory = 2048
 		v.cpus = 8
+		v.customize ["set", :id, "--adaptive-hypervisor", "on"]
 		override.vm.box = 'parallels/centos-7.1'
 	end
 

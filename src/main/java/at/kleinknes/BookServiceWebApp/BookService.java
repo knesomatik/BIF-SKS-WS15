@@ -27,17 +27,17 @@ public class BookService {
 
 		try {
 			checkValue(book.getAuthors());
-			checkValue(book.getID());
 			checkValue(book.getTitle());
 			checkValue(book.getPublisher());
 
 			if (!publisherService.verifyPublisher(book.getPublisher())) return false;
-			if (publisherService.getPublisher(book.getPublisher().getID()) == null) return false;
+			if (publisherService.findFirst(book.getPublisher().getName()) == null) return false;
+
 
 			for (Author author : book.getAuthors()) {
 				if (!authorService.verifyAuthor(author)) return false;
 
-				if (authorService.getAuthor(author.getID()) == null) return false;
+				if (authorService.findFirst(author.getFirstname(), author.getLastname()) == null) return false;
 			}
 
 			return true;
@@ -51,11 +51,11 @@ public class BookService {
 
 		try {
 			for (Book book : books) {
-				if (!verifyBook(book)) return "invalid data";
+				if (!verifyBook(book)) return "invalid data" + book.getTitle();
+				em.persist(book);
 			}
-
-			books.forEach(em::persist);
 		}catch (Exception e){
+			e.printStackTrace();
 			return "error " + e.getMessage();
 		}
 
@@ -64,7 +64,13 @@ public class BookService {
 
 
 	public List<Book> getAllBooks() {
-		return em.createNamedQuery("Book.selectAll", Book.class).getResultList();
+		List<Book> data = null;
+		try {
+			data = em.createNamedQuery("Book.selectAll", Book.class).getResultList();
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return data;
 	}
 
 	public List<Book> searchBooks(String title) {

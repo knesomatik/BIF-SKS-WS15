@@ -18,29 +18,46 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@XmlAttribute
 	private Long bookID = null;
+
 	@XmlAttribute
 	private String isbn = null;
+
 	@XmlAttribute
 	private String title = null;
+
 	@XmlAttribute
 	private String subtitle = null;
+
 	@XmlAttribute
 	private String description = null;
+
 	@XmlAttribute
 	private int pages;
+
 	@XmlAttribute
 	private String language = null;
-	@ManyToMany(fetch = FetchType.EAGER)
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(
 			name = "t_book_author",
 			joinColumns = {@JoinColumn(name = "Book_ID", referencedColumnName = "bookID")},
 			inverseJoinColumns = {@JoinColumn(name = "Author_ID", referencedColumnName = "authID")}
 	)
+	@XmlElement(name = "authors")
+	private List<Author> authors;
+
+	/*
+
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "authID")
 	@XmlElementWrapper(name = "authors")
 	@XmlElement(name = "author")
 	private List<Author> authors;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "PUB_ID")
+
+	 */
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@JoinColumn(name = "pubID")
 	@XmlElement
 	private Publisher publisher;
 

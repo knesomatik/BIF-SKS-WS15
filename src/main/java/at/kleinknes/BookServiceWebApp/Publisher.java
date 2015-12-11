@@ -8,7 +8,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 @Entity
 @Table(name = "t_publisher")
-@NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n")
+@NamedQueries({
+		@NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n"),
+		@NamedQuery(name = "Publisher.findFirst", query = "SELECT n FROM Publisher n WHERE lower(n.name) LIKE lower(:name)")
+})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Publisher {
 
@@ -17,57 +20,45 @@ public class Publisher {
 	@XmlAttribute
 	private Long pubID = null;
 	@XmlAttribute
-	private String Name = null;
+	private String name = null;
 	@XmlAttribute
-	private Long PostCode = null;
+	private Long postcode = null;
 	@XmlAttribute
-	private String CountryCode = null;
+	private String countrycode = null;
 
 	public Publisher() {
 
 	}
 
-	public Publisher(String first, Long newAd, String newTel) {
-		Name = first;
-		PostCode = newAd;
-		CountryCode = newTel;
-	}
-
-	public Boolean eqauls(Publisher pub) {
-		return this.Name.equals(pub.getName()) && this.PostCode.equals(pub.getPost()) && this.CountryCode.equals(pub.getCode());
-	}
-
-	public Long getID() {
+	public Long getPubID() {
 		return pubID;
 	}
 
-	public void setID(Long newID) {
-		pubID = newID;
+	public void setPubID(Long pubID) {
+		this.pubID = pubID;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
-	public void setName(String newTitle) {
-		Name = newTitle;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Long getPost() {
-		return PostCode;
+	public Long getPostcode() {
+		return postcode;
 	}
 
-	public void setPost(Long newTitle) {
-		PostCode = newTitle;
+	public void setPostcode(Long postcode) {
+		this.postcode = postcode;
 	}
 
-	public String getCode() {
-		return CountryCode;
+	public String getCountrycode() {
+		return countrycode;
 	}
 
-	public void setCode(String newNum) {
-		CountryCode = newNum;
+	public void setCountrycode(String countrycode) {
+		this.countrycode = countrycode;
 	}
-
-
 }

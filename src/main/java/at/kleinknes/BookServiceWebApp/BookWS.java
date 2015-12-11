@@ -6,7 +6,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
-//@Stateless
 @WebService(
 		name = "BookWS",
 		serviceName = "BookWebService",

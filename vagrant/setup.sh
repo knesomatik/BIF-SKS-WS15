@@ -20,14 +20,14 @@ WantedBy=multi-user.target
 
 (
 	# update system
-	yum -y update
+	yum -y distro-sync
 
 	# install java
+	# unfortunately we can't use java-headless, because then WildFly bugs araound -- TODO maybe investigate this further?
 	yum -y install java-1.8.0-openjdk
 
 	# set wildfly variables
-	export WILDFLY_VERSION="10.0.0.CR3"
-	export WILDFLY_SHA1="c14453890657e05fae0e2765c9dca8a35b2b2096"
+	export WILDFLY_VERSION="9.0.2.Final"
 	export JBOSS_HOME="/opt/jboss/wildfly"
 
 	# create dir
@@ -36,7 +36,6 @@ WantedBy=multi-user.target
 	# download, verify and install wildfly
 	cd $HOME \
 	&& curl -O https://download.jboss.org/wildfly/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz \
-	&& sha1sum wildfly-${WILDFLY_VERSION}.tar.gz | grep ${WILDFLY_SHA1} \
 	&& tar xf wildfly-${WILDFLY_VERSION}.tar.gz \
 	&& mv $HOME/wildfly-${WILDFLY_VERSION}/* ${JBOSS_HOME}/ \
 	&& rm wildfly-${WILDFLY_VERSION}.tar.gz

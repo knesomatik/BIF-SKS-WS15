@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import java.util.List;
 
 @Path("/rest/author")
-@Consumes({"application/json"})
+@Consumes({"*/*"})
 @Produces({"application/json"})
 
 public class AuthorREST {
@@ -18,22 +18,20 @@ public class AuthorREST {
 	private AuthorService authorService;
 
 	@GET
-	//@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public List<Author> getAuthors() {
 		return authorService.getAllAuthors();
 	}
 
 	@GET
 	@Path("/{id}")
-	//@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Author getAuthor(@PathParam("id") Long id) {
 		return authorService.getAuthor(id);
 	}
 
 	@PUT
 	@Path("/")
-	public Author addAuthor(@QueryParam("firstname") String firstname, @QueryParam("secondname") String secondname) {
-		return authorService.addAuthor(firstname, secondname);
+	public Author addAuthor(@FormParam("firstname") String firstname, @FormParam("lastname") String lastname) {
+		return authorService.addAuthor(firstname, lastname);
 	}
 
 	@POST
