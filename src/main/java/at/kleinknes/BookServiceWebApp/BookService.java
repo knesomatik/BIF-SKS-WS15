@@ -54,7 +54,7 @@ public class BookService {
 				if (!verifyBook(book)) return "invalid data" + book.getTitle();
 				em.persist(book);
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "error " + e.getMessage();
 		}
@@ -67,7 +67,7 @@ public class BookService {
 		List<Book> data = null;
 		try {
 			data = em.createNamedQuery("Book.selectAll", Book.class).getResultList();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return data;

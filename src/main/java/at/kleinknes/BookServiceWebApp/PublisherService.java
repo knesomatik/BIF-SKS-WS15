@@ -46,7 +46,7 @@ public class PublisherService {
 		Publisher data = null;
 		try {
 			data = em.createNamedQuery("Publisher.findFirst", Publisher.class).setParameter("name", name).getResultList().get(0);
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			System.err.println("Publisher not found: " + name);
 		}
 

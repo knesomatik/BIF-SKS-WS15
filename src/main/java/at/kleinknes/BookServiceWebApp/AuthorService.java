@@ -34,13 +34,13 @@ public class AuthorService {
 		}
 	}
 
-	public Author findFirst(String firstname, String lastname ){
+	public Author findFirst(String firstname, String lastname) {
 		Author data = null;
-		try{
+		try {
 			data = em.createNamedQuery("Author.findFirst", Author.class).setParameter("firstname", firstname).setParameter("lastname", lastname).getResultList().get(0);
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println("Author not found: " + firstname +  " " + lastname);
+			System.err.println("Author not found: " + firstname + " " + lastname);
 		}
 		return data;
 	}
