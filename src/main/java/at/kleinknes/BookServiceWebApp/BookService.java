@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -17,45 +18,80 @@ public class BookService {
 	@Inject
 	private AuthorService authorService;
 
+	public void verifyBook(Book book) throws Exception {
+		Common.checkValue(book.getIsbn(), "book isbn");
+		Common.checkValue(book.getTitle(), "book title");
+		Common.checkValue(book.getSubtitle(), "book subtitle");
+		Common.checkValue(book.getDescription(), "book description");
+		Common.checkValue(book.getPages(), "book pages");
+		Common.checkValue(book.getLanguage(), "book language");
+		Common.checkValue(book.getPublisher(), "book publisher");
+		Common.checkValue(book.getAuthors(), "book authors");
 
-	private void checkValue(Object o) throws Exception {
-		if (o != null && !o.equals(0) && !o.equals("")) return;
-		throw new Exception();
+		publisherService.verifyPublisher(book.getPublisher());
+		publisherService.CheckAndLook(book.getPublisher(), true);
+
+
+		for (Author author : book.getAuthors()) {
+			authorService.CheckAndLook(author, true);
+		}
 	}
 
-	public boolean verifyBook(Book book) {
-
+	public Book findFirst(String title) {
+		Book data = null;
 		try {
-			checkValue(book.getAuthors());
-			checkValue(book.getTitle());
-			checkValue(book.getPublisher());
-
-			if (!publisherService.verifyPublisher(book.getPublisher())) return false;
-			if (publisherService.findFirst(book.getPublisher().getName()) == null) return false;
-
-
-			for (Author author : book.getAuthors()) {
-				if (!authorService.verifyAuthor(author)) return false;
-
-				if (authorService.findFirst(author.getFirstname(), author.getLastname()) == null) return false;
-			}
-
-			return true;
+			data = em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", title).getResultList().get(0);
 		} catch (Exception ex) {
-			return false;
+			System.err.println("Book not found: " + title);
+		}
+		return data;
+	}
+
+	public void CheckAndLook(Book book, boolean should) throws Exception{
+		verifyBook(book);
+
+		Book find = findFirst(book.getTitle());
+
+		if(find == null){
+			System.out.println("BOOK NOT FOUND WHAT");
+			if(!should){
+				return;
+			}
+			throw new Exception("book does not exist");
 		}
 
+		System.out.println("BOOK IS FOUND");
+
+		if(find.equals(book)){
+			if(!should) throw new Exception("book already exists");
+			return;
+		}
+
+		if(should) throw new Exception("book does not exists");
 	}
+
 
 	public String saveBooks(List<Book> books) {
 
 		try {
 			for (Book book : books) {
-				if (!verifyBook(book)) return "invalid data" + book.getTitle();
+
+				CheckAndLook(book, false);
+
+				List<Author> dbAuthors = new ArrayList<>();
+
+				for(Author author : book.getAuthors()){
+					dbAuthors.add(authorService.findFirst(author.getFirstname(), author.getLastname()));
+				}
+
+				book.setAuthors(dbAuthors);
+
+				book.setPublisher(publisherService.findFirst(book.getPublisher().getName()));
+
 				em.persist(book);
+
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "error " + e.getMessage();
 		}
 

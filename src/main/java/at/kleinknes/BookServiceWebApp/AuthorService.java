@@ -17,21 +17,30 @@ public class AuthorService {
 	@Inject
 	private AuthorService authService;
 
-	private void checkValue(Object o) throws Exception {
-		if (o != null && !o.equals(0) && !o.equals("")) return;
-		throw new Exception();
+	public void verifyAuthor(Author author) throws Exception{
+		Common.checkValue(author.getFirstname(), "author firstname");
+		Common.checkValue(author.getLastname(), "author lastname");
+		Common.checkValue(author.getBirthdate(), "author birthdate");
 	}
 
-	public boolean verifyAuthor(Author author) {
+	public void CheckAndLook(Author author, boolean should) throws Exception{
+		verifyAuthor(author);
 
-		try {
-			checkValue(author.getFirstname());
-			checkValue(author.getLastname());
+		Author find = findFirst(author.getFirstname(), author.getLastname());
 
-			return true;
-		} catch (Exception ex) {
-			return false;
+		if(find == null){
+			if(!should){
+				return;
+			}
+			throw new Exception("author does not exist");
 		}
+
+		if(find.equals(author)){
+			if(!should) throw new Exception("author already exists");
+			return;
+		}
+
+		if(should) throw new Exception("author does not exists");
 	}
 
 	public Author findFirst(String firstname, String lastname) {
@@ -53,23 +62,19 @@ public class AuthorService {
 		return em.find(Author.class, id);
 	}
 
-	public Author addAuthor(String firstname, String lastna) {
-		Author a = new Author();
-		a.setFirstname(firstname);
-		a.setLastname(lastna);
+	public Author addAuthor(Author a) throws Exception{
+		CheckAndLook(a, false);
 		em.persist(a);
 		return a;
 	}
 
-	public Author updateAuthor(Long id, String firstname, String secondname) {
-		Author a = em.find(Author.class, id);
-		a.setFirstname(firstname);
-		a.setLastname(secondname);
+	public Author updateAuthor(Author a) throws Exception{
+		CheckAndLook(a, true);
 		em.persist(a);
 		return a;
 	}
 
-	public Author removeAuthor(Long id) {
+	public Author removeAuthor(Long id) throws Exception{
 		Author a = em.find(Author.class, id);
 		em.remove(a);
 		return a;

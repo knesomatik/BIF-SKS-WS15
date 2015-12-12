@@ -6,6 +6,7 @@ package at.kleinknes.BookServiceWebApp;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/rest/publisher")
@@ -18,33 +19,57 @@ public class PublisherREST {
 	private PublisherService publisherService;
 
 	@GET
-	@Path("/")
-	public List<Publisher> getPublishers() {
-		return publisherService.getAllPublishers();
+	public Response getPublishers() {
+		try{
+			List<Publisher> ad = publisherService.getAllPublishers();
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@GET
 	@Path("/{id}")
-	public Publisher getPublisher(@PathParam("id") Long id) {
-		return publisherService.getPublisher(id);
+	public Response getPublisher(@PathParam("id") Long id) {
+		try{
+			Publisher ad = publisherService.getPublisher(id);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@PUT
 	@Path("/")
-	public Publisher addPublisher(@FormParam("name") String name, @FormParam("postcode") String postcode, @FormParam("countrycode") String countrycode) {
-		return publisherService.addPublisher(name, Long.valueOf(postcode), countrycode);
+	public Response addPublisher(Publisher publisher) {
+		try{
+			Publisher ad = publisherService.addPublisher(publisher);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@POST
 	@Path("/{id}")
-	public Publisher updatePublisher(@PathParam("id") Long id, @QueryParam("name") String name, @QueryParam("postcode") Long postcode, @QueryParam("countrycode") String countrycode) {
-		return publisherService.updatePublisher(id, name, postcode, countrycode);
+	public Response updatePublisher(Publisher publisher) {
+		try{
+			Publisher ad = publisherService.updatePublisher(publisher);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Publisher removePublisher(@PathParam("id") Long id) {
-		return publisherService.removePublisher(id);
+	public Response removePublisher(@PathParam("id") Long id) {
+		try{
+			Publisher ad = publisherService.removePublisher(id);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 }

@@ -17,21 +17,30 @@ public class PublisherService {
 	@Inject
 	private AuthorService authService;
 
-	private void checkValue(Object o) throws Exception {
-		if (o != null && !o.equals(0) && !o.equals("")) return;
-		throw new Exception();
+	public void verifyPublisher(Publisher publisher) throws Exception{
+		Common.checkValue(publisher.getName(), "publisher name");
+		Common.checkValue(publisher.getPostcode(), "publisher postcode");
+		Common.checkValue(publisher.getCountrycode(), "publisher contrycode");
 	}
 
-	public boolean verifyPublisher(Publisher publisher) {
+	public void CheckAndLook(Publisher publisher, boolean should) throws Exception{
+		verifyPublisher(publisher);
 
-		try {
-			checkValue(publisher.getCountrycode());
-			checkValue(publisher.getName());
+		Publisher find = findFirst(publisher.getName());
 
-			return true;
-		} catch (Exception ex) {
-			return false;
+		if(find == null){
+			if(!should){
+				return;
+			}
+			throw new Exception("publisher does not exist");
 		}
+
+		if(find.equals(publisher)){
+			if(should) return;
+			throw new Exception("publisher already exists");
+		}
+
+		if(should) throw new Exception("publisher does not exist");
 	}
 
 	public List<Publisher> getAllPublishers() {
@@ -49,29 +58,22 @@ public class PublisherService {
 		} catch (Exception ex) {
 			System.err.println("Publisher not found: " + name);
 		}
-
 		return data;
 	}
 
-	public Publisher addPublisher(String name, Long postcode, String countrycode) {
-		Publisher a = new Publisher();
-		a.setName(name);
-		a.setPostcode(postcode);
-		a.setCountrycode(countrycode);
-		em.persist(a);
-		return a;
+	public Publisher addPublisher(Publisher pub) throws Exception{
+		CheckAndLook(pub, false);
+		em.persist(pub);
+		return pub;
 	}
 
-	public Publisher updatePublisher(Long id, String name, Long postcode, String countrycode) {
-		Publisher a = em.find(Publisher.class, id);
-		a.setName(name);
-		a.setPostcode(postcode);
-		a.setCountrycode(countrycode);
-		em.persist(a);
-		return a;
+	public Publisher updatePublisher(Publisher pub) throws Exception {
+		CheckAndLook(pub, true);
+		em.persist(pub);
+		return pub;
 	}
 
-	public Publisher removePublisher(Long id) {
+	public Publisher removePublisher(Long id) throws Exception{
 		Publisher a = em.find(Publisher.class, id);
 		em.remove(a);
 		return a;

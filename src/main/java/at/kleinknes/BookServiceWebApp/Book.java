@@ -2,17 +2,19 @@ package at.kleinknes.BookServiceWebApp;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "t_book")
+@Table(name = "book")
 @XmlRootElement(name = "book")
 @XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
 		@NamedQuery(name = "Book.selectAll", query = "SELECT n FROM Book n"),
 		@NamedQuery(name = "Book.searchAll", query = "SELECT n FROM Book n WHERE lower(n.title) LIKE lower(:search)")
 })
-public class Book {
+public class Book implements Cloneable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,24 +39,15 @@ public class Book {
 	@XmlAttribute
 	private String language = null;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name = "t_book_author",
-			joinColumns = {@JoinColumn(name = "Book_ID", referencedColumnName = "bookID")},
-			inverseJoinColumns = {@JoinColumn(name = "Author_ID", referencedColumnName = "authID")}
+			name = "book_author",
+			joinColumns = {@JoinColumn(name = "bookID", referencedColumnName = "bookID")},
+			inverseJoinColumns = {@JoinColumn(name = "authID", referencedColumnName = "authID")}
 	)
-	@XmlElement(name = "authors")
-	private List<Author> authors;
-
-	/*
-
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "authID")
 	@XmlElementWrapper(name = "authors")
 	@XmlElement(name = "author")
 	private List<Author> authors;
-
-	 */
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "pubID")
@@ -65,111 +58,140 @@ public class Book {
 
 	}
 
-	public Book(String first) {
-		title = first;
-	}
-
-	public Book(String newsDD, String first) {
-		isbn = newsDD;
-		title = first;
-	}
-
-	public Book(String newsDD, String first, int temp) {
-		isbn = newsDD;
-		title = first;
-		pages = temp;
-	}
-
-	public Book(Long ID, String newsDD, String first) {
-		bookID = ID;
-		isbn = newsDD;
-		title = first;
-	}
-
-	public Long getID() {
+	public Long getBookID() {
 		return bookID;
 	}
 
-	public void setID(Long newID) {
-		bookID = newID;
+	public void setBookID(Long bookID) {
+		this.bookID = bookID;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String newTitle) {
-		title = newTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getSub() {
+	public String getSubtitle() {
 		return subtitle;
 	}
 
-	public void setSub(String newTitle) {
-		subtitle = newTitle;
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
 	}
 
-	public String getDes() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDes(String newTitle) {
-		description = newTitle;
-	}
-
-	public String getLang() {
-		return language;
-	}
-
-	public void setLang(String newTitle) {
-		language = newTitle;
-	}
-
-	public String getISBN() {
-		return isbn;
-	}
-
-	public void setISBN(String newISBN) {
-		isbn = newISBN;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getPages() {
 		return pages;
 	}
 
-	public void setPages(int newPages) {
-		pages = newPages;
+	public void setPages(int pages) {
+		this.pages = pages;
 	}
 
-	/*
-	public Date getDate() {
-		return pubYear;
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setDate(Date newText) {
-		pubYear = newText;
-	}
-	*/
-
-	public Publisher getPublisher() {
-		return publisher;
-	}
-
-	public void setPublisher(Publisher newPublisher) {
-		publisher = newPublisher;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public List<Author> getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(List<Author> newAuthors) {
-		authors = newAuthors;
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
 	}
 
-	public void addAuthor(Author auth) {
-		authors.add(auth);
+	public Publisher getPublisher() {
+		return publisher;
 	}
 
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Book book = (Book) o;
+
+		try {
+
+			if (getAuthors().size() != book.getAuthors().size()) return false;
+
+
+			List<Author> myAuthors = new ArrayList<>();
+			List<Author> theirAuthors = new ArrayList<>();
+
+			Integer matches = 0;
+
+			for(int i = 0; i < getAuthors().size(); i++){
+				for(int j = 0; j < book.getAuthors().size(); j++){
+					if (getAuthors().get(i).equals(book.getAuthors().get(j))) {
+						myAuthors.add(getAuthors().get(i));
+						theirAuthors.add(book.getAuthors().get(j));
+						matches++;
+					}
+				}
+			}
+
+			if (myAuthors.size() != matches) return false;
+			if (theirAuthors.size() != matches) return false;
+			if (matches != getAuthors().size()) return false;
+
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+
+		if (getPages() != book.getPages()) return false;
+		if (getIsbn() != null ? !getIsbn().equals(book.getIsbn()) : book.getIsbn() != null) return false;
+		if (getTitle() != null ? !getTitle().equals(book.getTitle()) : book.getTitle() != null) return false;
+		if (getSubtitle() != null ? !getSubtitle().equals(book.getSubtitle()) : book.getSubtitle() != null)
+			return false;
+		if (getDescription() != null ? !getDescription().equals(book.getDescription()) : book.getDescription() != null)
+			return false;
+		if (getLanguage() != null ? !getLanguage().equals(book.getLanguage()) : book.getLanguage() != null)
+			return false;
+		return getPublisher() != null ? getPublisher().equals(book.getPublisher()) : book.getPublisher() == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getIsbn() != null ? getIsbn().hashCode() : 0;
+		result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+		result = 31 * result + (getSubtitle() != null ? getSubtitle().hashCode() : 0);
+		result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+		result = 31 * result + getPages();
+		result = 31 * result + (getLanguage() != null ? getLanguage().hashCode() : 0);
+		result = 31 * result + (getAuthors() != null ? getAuthors().hashCode() : 0);
+		result = 31 * result + (getPublisher() != null ? getPublisher().hashCode() : 0);
+		return result;
+	}
+
+	protected Book clone() throws CloneNotSupportedException {
+		return (Book) super.clone();
+	}
 }

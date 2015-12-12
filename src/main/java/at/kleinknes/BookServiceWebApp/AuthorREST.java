@@ -6,6 +6,7 @@ package at.kleinknes.BookServiceWebApp;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/rest/author")
@@ -18,32 +19,57 @@ public class AuthorREST {
 	private AuthorService authorService;
 
 	@GET
-	public List<Author> getAuthors() {
-		return authorService.getAllAuthors();
+	public Response getAuthors() {
+		try{
+			List<Author> ad = authorService.getAllAuthors();
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@GET
 	@Path("/{id}")
-	public Author getAuthor(@PathParam("id") Long id) {
-		return authorService.getAuthor(id);
+	public Response getAuthor(@PathParam("id") Long id) {
+		try{
+			Author ad = authorService.getAuthor(id);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@PUT
 	@Path("/")
-	public Author addAuthor(@FormParam("firstname") String firstname, @FormParam("lastname") String lastname) {
-		return authorService.addAuthor(firstname, lastname);
+	public Response addAuthor(Author author) {
+		try{
+			Author ad = authorService.addAuthor(author);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@POST
 	@Path("/{id}")
-	public Author updateAuthor(@PathParam("id") Long id, @QueryParam("firstname") String firstname, @QueryParam("secondname") String secondname) {
-		return authorService.updateAuthor(id, firstname, secondname);
+	public Response updateAuthor(Author author) {
+		try{
+			Author ad = authorService.updateAuthor(author);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Author removeAuthor(@PathParam("id") Long id) {
-		return authorService.removeAuthor(id);
+	public Response removeAuthor(@PathParam("id") Long id) {
+		try{
+			Author ad = authorService.removeAuthor(id);
+			return Response.ok().entity(ad).build();
+		}catch (Exception ex){
+			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+		}
 	}
 
 }
