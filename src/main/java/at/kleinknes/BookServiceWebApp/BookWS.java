@@ -4,12 +4,10 @@ import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
-@WebService(
-		name = "BookWS",
-		serviceName = "BookWebService",
-		portName = "BookWebServicePort")
+@WebService(name = "BookWS", serviceName = "BookWebService", portName = "BookWebServicePort")
 public class BookWS {
 
 	@Inject

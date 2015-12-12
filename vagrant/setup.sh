@@ -18,6 +18,7 @@ RestartSec=30
 WantedBy=multi-user.target
 '
 
+# yum repo for mariadb
 mariadb_repo='
 # MariaDB 10.1 CentOS repository list - created 2015-12-12 14:48 UTC
 # http://mariadb.org/mariadb/repositories/
@@ -28,12 +29,27 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 '
 
+# SQL script for creating database and user
+mysqlsetup='
+create database sksdb;
+
+create user "x"@"localhost" identified by "x";
+
+grant all privileges on *.* to "x"@"localhost" with grant option;
+
+create user "x"@"%" identified by "x";
+
+grant all privileges on *.* to "x"@"%" with grant option;
+
+flush privileges;
+'
+
 (
 	# add mariadb repo
 	echo "$mariadb_repo" > /etc/yum.repos.d/mariadb.repo
 
 	# update system
-	#yum -y distro-sync
+	yum -y distro-sync
 
 	# install java
 	# unfortunately we can't use java-headless, because then WildFly bugs araound -- TODO maybe investigate this further?
@@ -78,13 +94,13 @@ gpgcheck=1
 	wget https://downloads.mariadb.com/enterprise/zph4-37nq/connectors/java/connector-java-1.3.3/mariadb-java-client-1.3.3.jar -O /opt/jboss/wildfly/standalone/deployments/mariadb-client.jar
 
 	# add datasource
-	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source add --name=SKS_db --driver-name=mariadb-client.jar --driver-class=org.mariadb.jdbc.Driver  --jndi-name=java:jboss/datasources/SKS_db --connection-url="jdbc:mariadb://localhost:3306/sksdb?useUnicode=true&characterEncoding=UTF-8" --use-ccm=true --max-pool-size=25 --blocking-timeout-wait-millis=5000 --enabled=true  --user-name="root" '
+	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source add --name=SKS_db --driver-name=mariadb-client.jar --driver-class=org.mariadb.jdbc.Driver  --jndi-name=java:jboss/datasources/SKS_db --connection-url="jdbc:mariadb://localhost:3306/sksdb?useUnicode=true&characterEncoding=UTF-8" --use-ccm=true --max-pool-size=25 --blocking-timeout-wait-millis=5000 --enabled=true  --user-name="x" --password="x"'
 
 	# restart mariadb
 	systemctl restart mariadb.service
 
-	# add db
-	echo "create database sksdb" | mysql -uroot
+	# setup mysql
+	echo "$mysqlsetup" | mysql -uroot
 
 	# remove exampleDS
 	#/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source remove --name=ExampleDS'
