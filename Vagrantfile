@@ -30,11 +30,11 @@ Vagrant.configure(2) do |config|
 	# forward VM ports
 	config.vm.network :forwarded_port, guest: 9990, host: 9990
 	config.vm.network :forwarded_port, guest: 8080, host: 9991
-	config.vm.network :private_network, ip: '10.10.100.10'
 
 	# sync folder
 	config.vm.synced_folder 'vagrant/data', '/vagrant-data', nfs: false
 	config.vm.synced_folder 'vagrant/logs', '/vagrant-logs', nfs: false
+	#config.vm.synced_folder 'vagrant/mysql', '/var/lib/mysql', nfs: false
 
 	# set provisioning
 	config.vm.provision 'shell' do |s|
