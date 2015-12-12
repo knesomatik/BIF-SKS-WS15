@@ -1,9 +1,6 @@
 package at.kleinknes.BookServiceWebApp;
 
 import javax.ejb.Stateless;
-import javax.ws.rs.core.Response;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 
 /**
  * Created by fekle on 12/12/15.

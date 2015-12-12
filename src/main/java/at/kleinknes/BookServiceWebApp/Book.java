@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "book")
@@ -147,8 +146,8 @@ public class Book implements Cloneable {
 
 			Integer matches = 0;
 
-			for(int i = 0; i < getAuthors().size(); i++){
-				for(int j = 0; j < book.getAuthors().size(); j++){
+			for (int i = 0; i < getAuthors().size(); i++) {
+				for (int j = 0; j < book.getAuthors().size(); j++) {
 					if (getAuthors().get(i).equals(book.getAuthors().get(j))) {
 						myAuthors.add(getAuthors().get(i));
 						theirAuthors.add(book.getAuthors().get(j));
@@ -161,7 +160,7 @@ public class Book implements Cloneable {
 			if (theirAuthors.size() != matches) return false;
 			if (matches != getAuthors().size()) return false;
 
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 

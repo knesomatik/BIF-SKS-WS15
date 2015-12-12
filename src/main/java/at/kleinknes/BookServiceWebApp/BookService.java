@@ -47,14 +47,14 @@ public class BookService {
 		return data;
 	}
 
-	public void CheckAndLook(Book book, boolean should) throws Exception{
+	public void CheckAndLook(Book book, boolean should) throws Exception {
 		verifyBook(book);
 
 		Book find = findFirst(book.getTitle());
 
-		if(find == null){
+		if (find == null) {
 			System.out.println("BOOK NOT FOUND WHAT");
-			if(!should){
+			if (!should) {
 				return;
 			}
 			throw new Exception("book does not exist");
@@ -62,12 +62,12 @@ public class BookService {
 
 		System.out.println("BOOK IS FOUND");
 
-		if(find.equals(book)){
-			if(!should) throw new Exception("book already exists");
+		if (find.equals(book)) {
+			if (!should) throw new Exception("book already exists");
 			return;
 		}
 
-		if(should) throw new Exception("book does not exists");
+		if (should) throw new Exception("book does not exists");
 	}
 
 
@@ -80,7 +80,7 @@ public class BookService {
 
 				List<Author> dbAuthors = new ArrayList<>();
 
-				for(Author author : book.getAuthors()){
+				for (Author author : book.getAuthors()) {
 					dbAuthors.add(authorService.findFirst(author.getFirstname(), author.getLastname()));
 				}
 

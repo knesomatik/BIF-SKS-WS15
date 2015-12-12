@@ -20,10 +20,10 @@ public class PublisherREST {
 
 	@GET
 	public Response getPublishers() {
-		try{
+		try {
 			List<Publisher> ad = publisherService.getAllPublishers();
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -31,10 +31,10 @@ public class PublisherREST {
 	@GET
 	@Path("/{id}")
 	public Response getPublisher(@PathParam("id") Long id) {
-		try{
+		try {
 			Publisher ad = publisherService.getPublisher(id);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -42,10 +42,10 @@ public class PublisherREST {
 	@PUT
 	@Path("/")
 	public Response addPublisher(Publisher publisher) {
-		try{
+		try {
 			Publisher ad = publisherService.addPublisher(publisher);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -53,10 +53,10 @@ public class PublisherREST {
 	@POST
 	@Path("/{id}")
 	public Response updatePublisher(Publisher publisher) {
-		try{
+		try {
 			Publisher ad = publisherService.updatePublisher(publisher);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -64,10 +64,10 @@ public class PublisherREST {
 	@DELETE
 	@Path("/{id}")
 	public Response removePublisher(@PathParam("id") Long id) {
-		try{
+		try {
 			Publisher ad = publisherService.removePublisher(id);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}

@@ -17,30 +17,30 @@ public class PublisherService {
 	@Inject
 	private AuthorService authService;
 
-	public void verifyPublisher(Publisher publisher) throws Exception{
+	public void verifyPublisher(Publisher publisher) throws Exception {
 		Common.checkValue(publisher.getName(), "publisher name");
 		Common.checkValue(publisher.getPostcode(), "publisher postcode");
 		Common.checkValue(publisher.getCountrycode(), "publisher contrycode");
 	}
 
-	public void CheckAndLook(Publisher publisher, boolean should) throws Exception{
+	public void CheckAndLook(Publisher publisher, boolean should) throws Exception {
 		verifyPublisher(publisher);
 
 		Publisher find = findFirst(publisher.getName());
 
-		if(find == null){
-			if(!should){
+		if (find == null) {
+			if (!should) {
 				return;
 			}
 			throw new Exception("publisher does not exist");
 		}
 
-		if(find.equals(publisher)){
-			if(should) return;
+		if (find.equals(publisher)) {
+			if (should) return;
 			throw new Exception("publisher already exists");
 		}
 
-		if(should) throw new Exception("publisher does not exist");
+		if (should) throw new Exception("publisher does not exist");
 	}
 
 	public List<Publisher> getAllPublishers() {
@@ -61,7 +61,7 @@ public class PublisherService {
 		return data;
 	}
 
-	public Publisher addPublisher(Publisher pub) throws Exception{
+	public Publisher addPublisher(Publisher pub) throws Exception {
 		CheckAndLook(pub, false);
 		em.persist(pub);
 		return pub;
@@ -73,7 +73,7 @@ public class PublisherService {
 		return pub;
 	}
 
-	public Publisher removePublisher(Long id) throws Exception{
+	public Publisher removePublisher(Long id) throws Exception {
 		Publisher a = em.find(Publisher.class, id);
 		em.remove(a);
 		return a;

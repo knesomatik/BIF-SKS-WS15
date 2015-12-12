@@ -20,10 +20,10 @@ public class AuthorREST {
 
 	@GET
 	public Response getAuthors() {
-		try{
+		try {
 			List<Author> ad = authorService.getAllAuthors();
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -31,10 +31,10 @@ public class AuthorREST {
 	@GET
 	@Path("/{id}")
 	public Response getAuthor(@PathParam("id") Long id) {
-		try{
+		try {
 			Author ad = authorService.getAuthor(id);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -42,10 +42,10 @@ public class AuthorREST {
 	@PUT
 	@Path("/")
 	public Response addAuthor(Author author) {
-		try{
+		try {
 			Author ad = authorService.addAuthor(author);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -53,10 +53,10 @@ public class AuthorREST {
 	@POST
 	@Path("/{id}")
 	public Response updateAuthor(Author author) {
-		try{
+		try {
 			Author ad = authorService.updateAuthor(author);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}
@@ -64,10 +64,10 @@ public class AuthorREST {
 	@DELETE
 	@Path("/{id}")
 	public Response removeAuthor(@PathParam("id") Long id) {
-		try{
+		try {
 			Author ad = authorService.removeAuthor(id);
 			return Response.ok().entity(ad).build();
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
 		}
 	}

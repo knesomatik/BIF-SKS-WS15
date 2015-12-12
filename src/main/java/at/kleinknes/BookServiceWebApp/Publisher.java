@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import java.util.Objects;
 
 
 @Entity
@@ -15,6 +14,21 @@ import java.util.Objects;
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Publisher {
+
+	@Id
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlAttribute
+	private Long pubID = null;
+	@XmlAttribute
+	private String name = null;
+	@XmlAttribute
+	private Long postcode = null;
+	@XmlAttribute
+	private String countrycode = null;
+	public Publisher() {
+
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -36,22 +50,6 @@ public class Publisher {
 		result = 31 * result + (getPostcode() != null ? getPostcode().hashCode() : 0);
 		result = 31 * result + (getCountrycode() != null ? getCountrycode().hashCode() : 0);
 		return result;
-	}
-
-	@Id
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlAttribute
-	private Long pubID = null;
-	@XmlAttribute
-	private String name = null;
-	@XmlAttribute
-	private Long postcode = null;
-	@XmlAttribute
-	private String countrycode = null;
-
-	public Publisher() {
-
 	}
 
 	public Long getPubID() {
