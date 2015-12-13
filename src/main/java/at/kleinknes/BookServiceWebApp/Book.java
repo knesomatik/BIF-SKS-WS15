@@ -11,7 +11,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
 		@NamedQuery(name = "Book.selectAll", query = "SELECT n FROM Book n"),
-		@NamedQuery(name = "Book.searchAll", query = "SELECT n FROM Book n WHERE lower(n.title) LIKE lower(:search)")
+		@NamedQuery(name = "Book.find", query = "SELECT n FROM Book n WHERE lower(n.title) LIKE lower(:search)")
 })
 public class Book implements Cloneable {
 
@@ -38,7 +38,7 @@ public class Book implements Cloneable {
 	@XmlAttribute
 	private String language = null;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(
 			name = "book_author",
 			joinColumns = {@JoinColumn(name = "bookID", referencedColumnName = "bookID")},

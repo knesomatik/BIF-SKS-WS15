@@ -36,35 +36,53 @@ public class BookService {
 			authorService.CheckAndLook(author, true);
 		}
 	}
+	public List<Book> find(String title) {
 
-	public Book findFirst(String title) {
-		Book data = null;
+		List<Book> data = null;
+
+
 		try {
-			data = em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", title).getResultList().get(0);
+			data = em.createNamedQuery("Book.find", Book.class).setParameter("search", title).getResultList();
 		} catch (Exception ex) {
-			System.err.println("Book not found: " + title);
+			System.err.println("Book not found: " + title + "	Cause: " + ex.getMessage());
 		}
+
+
+		return data;
+	}
+
+	public List<Book> search(String title) {
+
+		List<Book> data = null;
+
+
+		try {
+			data = em.createNamedQuery("Book.find", Book.class).setParameter("search", "%" + title + "%").getResultList();
+		} catch (Exception ex) {
+			System.err.println("Book not found: " + title + "	Cause: " + ex.getMessage());
+		}
+
+
 		return data;
 	}
 
 	public void CheckAndLook(Book book, boolean should) throws Exception {
 		verifyBook(book);
 
-		Book find = findFirst(book.getTitle());
+		List<Book> findlist = find(book.getTitle());
 
-		if (find == null) {
-			System.out.println("BOOK NOT FOUND WHAT");
+		if (findlist == null) {
 			if (!should) {
 				return;
 			}
 			throw new Exception("book does not exist");
 		}
 
-		System.out.println("BOOK IS FOUND");
-
-		if (find.equals(book)) {
-			if (!should) throw new Exception("book already exists");
-			return;
+		for(Book find : findlist){
+			if (find.equals(book)) {
+				if (!should) throw new Exception("book already exists");
+				return;
+			}
 		}
 
 		if (should) throw new Exception("book does not exists");
@@ -81,17 +99,23 @@ public class BookService {
 				List<Author> dbAuthors = new ArrayList<>();
 
 				for (Author author : book.getAuthors()) {
-					dbAuthors.add(authorService.findFirst(author.getFirstname(), author.getLastname()));
+					Author find = authorService.find(author.getFirstname(), author.getLastname(), author.getBirthdate()).get(0);
+					dbAuthors.add(find);
 				}
 
 				book.setAuthors(dbAuthors);
 
-				book.setPublisher(publisherService.findFirst(book.getPublisher().getName()));
+				System.out.println(book.getPublisher().getName());
+
+				book.setPublisher(publisherService.find(book.getPublisher().getName(), book.getPublisher().getPostcode(), book.getPublisher().getCountrycode()).get(0));
+
 
 				em.persist(book);
 
+
 			}
 		} catch (Exception e) {
+		//	e.printStackTrace();
 			return "error " + e.getMessage();
 		}
 
@@ -107,10 +131,6 @@ public class BookService {
 			ex.printStackTrace();
 		}
 		return data;
-	}
-
-	public List<Book> searchBooks(String title) {
-		return em.createNamedQuery("Book.searchAll", Book.class).setParameter("search", "%" + title + "%").getResultList();
 	}
 
 }

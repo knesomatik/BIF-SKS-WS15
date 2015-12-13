@@ -26,31 +26,47 @@ public class AuthorService {
 	public void CheckAndLook(Author author, boolean should) throws Exception {
 		verifyAuthor(author);
 
-		Author find = findFirst(author.getFirstname(), author.getLastname());
+		List<Author> findlist = find(author.getFirstname(), author.getLastname(), author.getBirthdate());
 
-		if (find == null) {
+		if (findlist == null) {
 			if (!should) {
 				return;
 			}
 			throw new Exception("author does not exist");
 		}
 
-		if (find.equals(author)) {
-			if (!should) throw new Exception("author already exists");
-			return;
+		for (Author find : findlist){
+			if (find.equals(author)) {
+				if (!should) throw new Exception("author already exists");
+				return;
+			}
 		}
-
 		if (should) throw new Exception("author does not exists");
 	}
 
-	public Author findFirst(String firstname, String lastname) {
-		Author data = null;
+	public List<Author> find(String firstname, String lastname, String birthdate) {
+		em.flush();
 		try {
-			data = em.createNamedQuery("Author.findFirst", Author.class).setParameter("firstname", firstname).setParameter("lastname", lastname).getResultList().get(0);
+			List<Author> data = em.createNamedQuery("Author.find", Author.class).setParameter("firstname", firstname).setParameter("lastname", lastname).setParameter("birthdate", birthdate).getResultList();
+
+			return data;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.err.println("Author not found: " + firstname + " " + lastname);
+		}
+
+		return null;
+	}
+
+	public List<Author> search(String firstname, String lastname,  String birthdate) {
+
+		try {
+			return em.createNamedQuery("Author.find", Author.class).setParameter("firstname", "%" + firstname + "%").setParameter("lastname", "%" + lastname + "%").setParameter("birthdate", "%" + birthdate + "%").getResultList();
 		} catch (Exception ex) {
 			System.err.println("Author not found: " + firstname + " " + lastname);
 		}
-		return data;
+
+		return null;
 	}
 
 	public List<Author> getAllAuthors() {

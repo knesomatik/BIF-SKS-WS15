@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 @Table(name = "publisher")
 @NamedQueries({
 		@NamedQuery(name = "Publisher.selectAll", query = "SELECT n FROM Publisher n"),
-		@NamedQuery(name = "Publisher.findFirst", query = "SELECT n FROM Publisher n WHERE lower(n.name) LIKE lower(:name)")
+		@NamedQuery(name = "Publisher.find", query = "SELECT n FROM Publisher n WHERE lower(n.name) LIKE lower(:name) AND n.postcode LIKE :postcode AND lower(n.countrycode) LIKE lower(:countrycode)")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Publisher {

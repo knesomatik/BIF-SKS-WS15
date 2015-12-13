@@ -24,6 +24,6 @@ public class BookWS {
 
 	@WebMethod
 	public List<Book> searchBooks(String title) {
-		return bookService.searchBooks(title);
+		return bookService.search(title);
 	}
 }

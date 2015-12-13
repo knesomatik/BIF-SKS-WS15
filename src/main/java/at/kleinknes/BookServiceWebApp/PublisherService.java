@@ -26,18 +26,18 @@ public class PublisherService {
 	public void CheckAndLook(Publisher publisher, boolean should) throws Exception {
 		verifyPublisher(publisher);
 
-		Publisher find = findFirst(publisher.getName());
+		List<Publisher> findlist = find(publisher.getName(), publisher.getPostcode(), publisher.getCountrycode());
 
-		if (find == null) {
-			if (!should) {
-				return;
-			}
-			throw new Exception("publisher does not exist");
+		if (findlist == null) {
+			if (!should) throw new Exception("author already exists");
+			return;
 		}
 
-		if (find.equals(publisher)) {
-			if (should) return;
-			throw new Exception("publisher already exists");
+		for(Publisher find : findlist) {
+			if (find.equals(publisher)) {
+				if (should) return;
+				throw new Exception("publisher already exists");
+			}
 		}
 
 		if (should) throw new Exception("publisher does not exist");
@@ -51,14 +51,22 @@ public class PublisherService {
 		return em.find(Publisher.class, id);
 	}
 
-	public Publisher findFirst(String name) {
-		Publisher data = null;
+	public List<Publisher> find(String name, Long postcode, String countrycode) {
 		try {
-			data = em.createNamedQuery("Publisher.findFirst", Publisher.class).setParameter("name", name).getResultList().get(0);
+			return em.createNamedQuery("Publisher.find", Publisher.class).setParameter("name", name).setParameter("postcode", postcode).setParameter("countrycode", countrycode).getResultList();
 		} catch (Exception ex) {
 			System.err.println("Publisher not found: " + name);
 		}
-		return data;
+		return null;
+	}
+
+	public List<Publisher> search(String name, Long postcode, String countrycode) {
+		try {
+			return em.createNamedQuery("Publisher.find", Publisher.class).setParameter("name", "%" + name + "%").setParameter("postcode", "%" + postcode + "%").setParameter("countrycode", "%" + countrycode + "%").getResultList();
+		} catch (Exception ex) {
+			System.err.println("Publisher not found: " + name);
+		}
+		return null;
 	}
 
 	public Publisher addPublisher(Publisher pub) throws Exception {

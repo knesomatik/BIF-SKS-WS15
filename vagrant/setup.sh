@@ -94,7 +94,7 @@ flush privileges;
 	wget https://downloads.mariadb.com/enterprise/zph4-37nq/connectors/java/connector-java-1.3.3/mariadb-java-client-1.3.3.jar -O /opt/jboss/wildfly/standalone/deployments/mariadb-client.jar
 
 	# add datasource
-	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source add --name=SKS_db --driver-name=mariadb-client.jar --driver-class=org.mariadb.jdbc.Driver  --jndi-name=java:jboss/datasources/SKS_db --connection-url="jdbc:mariadb://localhost:3306/sksdb?useUnicode=true&characterEncoding=UTF-8" --use-ccm=true --max-pool-size=25 --blocking-timeout-wait-millis=5000 --enabled=true  --user-name="x" --password="x"'
+	/opt/jboss/wildfly/bin/jboss-cli.sh -c --command='data-source add --name=SKS_db --driver-name=mariadb-client.jar --driver-class=org.mariadb.jdbc.Driver  --jndi-name=java:jboss/datasources/SKS_db --connection-url="jdbc:mariadb://localhost:3306/sksdb?useUnicode=true&characterEncoding=UTF-8" --use-ccm=false --max-pool-size=100 --enabled=true  --user-name="x" --password="x" --validate-on-match=false --use-fast-fail=true --transaction-isolation="TRANSACTION_SERIALIZABLE" --check-valid-connection-sql="select 1" --background-validation=true --background-validation-millis=10000 --share-prepared-statements=false --idle-timeout-minutes=1 --allocation-retry=3'
 
 	# restart mariadb
 	systemctl restart mariadb.service
