@@ -23,8 +23,8 @@ Vagrant.configure(2) do |config|
 
 	# options for virtualbox provider
 	config.vm.provider 'virtualbox' do |v|
-		v.memory = 1024
-		v.cpus = 8
+		v.memory = 2048
+		v.cpus = 4
 	end
 
 	# forward VM ports
