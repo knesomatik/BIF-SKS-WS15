@@ -68,8 +68,8 @@
 					success: function (publisher) {
 						var html2 = "";
 						for (var i = 0; i < publisher.length; i++) {
-							if (info == publisher[i].Name) {
-								html2 = "Name= " + publisher[i].Name + "\nPostCode= " + publisher[i].PostCode + "\nCountryCode= " + publisher[i].CountryCode;
+							if (info == publisher[i].name) {
+								html2 = "Name= " + publisher[i].name + "\nPostCode= " + publisher[i].postcode + "\nCountryCode= " + publisher[i].countrycode;
 							}
 						}
 						alert(html2);
@@ -87,7 +87,7 @@
 				success: function (publisher) {
 					var html = "";
 					for (var i = 0; i < publisher.length; i++) {
-						html += "<li class='pub'>" + publisher[i].Name + "</li>";
+						html += "<li class='pub'>" + publisher[i].name + "</li>";
 					}
 
 					document.getElementById("content").innerHTML = html;
